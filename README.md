@@ -48,7 +48,7 @@ PathMentor, kullanıcıların CV’lerini yükleyerek kariyer hedeflerine göre 
 
 * Sprint içinde tamamlanması beklenen puan 100 olarak belirlenmiştir.
   
-* **Puan Tamamlama Mantığı:** Görevler, süre ve zorluk oranına göre 100 puan üzerinden orantılı puanlanmıştır. Her görev, iş yükünü dengeli yansıtacak şekilde puan almış ve sprint sonunda hedeflenen toplam puan tamamlanmıştır.
+* **Puan Tamamlama Mantığı:** Görevler, süre ve zorluk oranına göre 100 puan üzerinden orantılı puanlanmıştır. Her görev, iş yükünü dengeli yansıtacak şekilde puan almış ve sprint sonunda hedeflenen toplam puan tamamlanamamıştır.
 * **Daily Scrum:** İletişim için WhatsApp grubu kullanılmış, günlük olarak değil, ihtiyaç oldukça yapılan scrum görüşmeleri gerçekleştirilmiştir.
 
 <summary>Daily Scrum, Toplantı ve Fikir Geliştirme Ekran Görüntüleri</summary>
