@@ -1,0 +1,68 @@
+from pydantic import BaseModel, EmailStr, Field
+from datetime import datetime
+from typing import Optional
+
+# Kullanıcı kayıt şeması
+class UserCreate(BaseModel):
+    email: EmailStr
+    username: str = Field(..., min_length=3, max_length=50, description="Kullanıcı adı")
+    password: str = Field(..., min_length=6, description="Şifre (minimum 6 karakter)")
+    full_name: Optional[str] = Field(None, description="Tam ad")
+    profession: Optional[str] = Field(None, description="Meslek/İş alanı")
+    experience_level: Optional[str] = Field(None, description="Deneyim seviyesi (Başlangıç/Orta/İleri)")
+    career_goals: Optional[str] = Field(None, description="Kariyer hedefleri")
+
+# Kullanıcı giriş şeması
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
+# Token şeması
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
+
+# Kullanıcı yanıt şeması (şifre olmadan)
+class UserResponse(BaseModel):
+    id: int
+    email: str
+    username: str
+    full_name: Optional[str] = None
+    profession: Optional[str] = None
+    experience_level: Optional[str] = None
+    career_goals: Optional[str] = None
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+# Kullanıcı güncelleme şeması
+class UserUpdate(BaseModel):
+    email: Optional[EmailStr] = None
+    full_name: Optional[str] = None
+    profession: Optional[str] = None
+    experience_level: Optional[str] = None
+    career_goals: Optional[str] = None
+
+# Hedef yönetimi şemaları
+class TargetBase(BaseModel):
+    company: str = Field(..., min_length=2, max_length=100, description="Şirket adı")
+    role: str = Field(..., min_length=2, max_length=100, description="Hedef pozisyon")
+
+class TargetCreate(TargetBase):
+    pass
+
+class TargetOut(TargetBase):
+    id: int
+    user_id: int
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+# Başarı mesajı şeması
+class Message(BaseModel):
+    message: str 
