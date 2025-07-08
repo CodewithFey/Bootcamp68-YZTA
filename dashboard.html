@@ -174,18 +174,37 @@
     </div>
     
     <script>
-        // Auth check
-        document.addEventListener('DOMContentLoaded', () => {
+        // Auth check ve profil kontrol
+        document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('access_token');
             if (!token) {
                 window.location.href = '/static/login.html';
+                return;
+            }
+            
+            // Profil tamamlama durumunu kontrol et
+            try {
+                const response = await fetch('/api/profile/check-complete', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                                 if (response.ok && !data.profile_complete) {
+                     // Profil tamamlanmamış, profil sayfasına yönlendir
+                     window.location.href = '/static/profile.html?from=dashboard';
+                 }
+            } catch (error) {
+                console.error('Profil kontrol hatası:', error);
             }
         });
         
         const toast = new ToastNotification();
         
         function viewProfile() {
-            toast.show('Profil sayfası yakında kullanıma sunulacak!', 'info');
+            window.location.href = '/static/profile.html';
         }
         
         function logout() {

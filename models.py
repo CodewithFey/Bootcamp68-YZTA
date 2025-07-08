@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from database import Base
@@ -15,6 +15,8 @@ class User(Base):
     profession = Column(String, nullable=True)  # Meslek
     experience_level = Column(String, nullable=True)  # Deneyim seviyesi
     career_goals = Column(Text, nullable=True)  # Kariyer hedefleri
+    profile_complete = Column(Boolean, default=False)  # Profil tamamlama durumu
+    cv_file_path = Column(String, nullable=True)  # CV dosya yolu
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     
     # Hedefler ilişkisi

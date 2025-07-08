@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Tamamla - Kariyer Koçu</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .profile-header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .profile-header p {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+        
+        .profile-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .option-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow-lg);
+        }
+        
+        .option-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .option-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .option-card p {
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .form-section {
+            display: none;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .form-section.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--input-border);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .file-upload {
+            border: 2px dashed var(--input-border);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary-color);
+            background: var(--hover-background);
+        }
+        
+        .file-upload.dragover {
+            border-color: var(--primary-color);
+            background: var(--hover-background);
+        }
+        
+        .file-upload-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .file-upload-text {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .file-upload-info {
+            color: var(--muted-text);
+            font-size: 0.9rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn-back {
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .btn-back:hover {
+            background: var(--primary-color);
+        }
+        
+        .selected-file {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--hover-background);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .selected-file-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .selected-file-name {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .selected-file-size {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+        
+        .remove-file {
+            color: var(--error-color);
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        .remove-file:hover {
+            color: var(--error-color-dark);
+        }
+        
+        @media (max-width: 768px) {
+            .profile-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>Profil Tamamla</h1>
+            <p>Kariyer yolculuğunuza başlamak için profilinizi tamamlayın</p>
+        </div>
+        
+        <div class="profile-options" id="profileOptions">
+            <div class="option-card">
+                <div class="option-icon">
+                    <i class="fas fa-file-upload"></i>
+                </div>
+                <h3>CV Yükle</h3>
+                <p>Mevcut CV'nizi yükleyin ve yapay zeka otomatik olarak profil bilgilerinizi çıkarsın</p>
+                <button class="btn btn-primary" onclick="showCVUpload()">
+                    CV Yükle
+                </button>
+            </div>
+            
+            <div class="option-card">
+                <div class="option-icon">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <h3>Form Doldur</h3>
+                <p>Profil bilgilerinizi manuel olarak girin ve detaylarınızı özelleştirin</p>
+                <button class="btn btn-primary" onclick="showProfileForm()">
+                    Form Doldur
+                </button>
+            </div>
+        </div>
+        
+        <!-- CV Yükleme Formu -->
+        <div class="form-section" id="cvUploadSection">
+            <h2><i class="fas fa-file-upload"></i> CV Yükle</h2>
+            <form id="cvUploadForm">
+                <div class="form-group">
+                    <div class="file-upload" id="fileUpload">
+                        <input type="file" id="cvFile" accept=".pdf,.doc,.docx" style="display: none;">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="file-upload-text">
+                            CV dosyanızı sürükleyip bırakın veya seçin
+                        </div>
+                        <div class="file-upload-info">
+                            PDF, DOC veya DOCX formatında, maksimum 10MB
+                        </div>
+                    </div>
+                    <div class="selected-file" id="selectedFile" style="display: none;">
+                        <div class="selected-file-info">
+                            <div>
+                                <div class="selected-file-name" id="fileName"></div>
+                                <div class="selected-file-size" id="fileSize"></div>
+                            </div>
+                            <div class="remove-file" onclick="removeFile()">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-back" onclick="showOptions()">
+                        <i class="fas fa-arrow-left"></i> Geri
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> CV'yi Yükle
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Profil Formu -->
+        <div class="form-section" id="profileFormSection">
+            <h2><i class="fas fa-edit"></i> Profil Bilgileri</h2>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="full_name">Tam Ad *</label>
+                    <input type="text" id="full_name" name="full_name" required placeholder="Adınızı ve soyadınızı girin">
+                </div>
+                
+                <div class="form-group">
+                    <label for="profession">Meslek *</label>
+                    <input type="text" id="profession" name="profession" required placeholder="Mesleğinizi girin">
+                </div>
+                
+                <div class="form-group">
+                    <label for="experience_level">Deneyim Seviyesi *</label>
+                    <select id="experience_level" name="experience_level" required>
+                        <option value="">Seçiniz</option>
+                        <option value="Başlangıç">Başlangıç (0-2 yıl)</option>
+                        <option value="Orta">Orta (2-5 yıl)</option>
+                        <option value="İleri">İleri (5-10 yıl)</option>
+                        <option value="Uzman">Uzman (10+ yıl)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="career_goals">Kariyer Hedefleri *</label>
+                    <textarea id="career_goals" name="career_goals" required placeholder="Kariyer hedeflerinizi detaylı bir şekilde açıklayın..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-back" onclick="showOptions()">
+                        <i class="fas fa-arrow-left"></i> Geri
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Profili Kaydet
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="toast-icon"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        // Auth check - Sadece token kontrolü
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('access_token');
+            
+            if (!token) {
+                // Token yoksa login sayfasına yönlendir
+                window.location.href = '/static/login.html';
+            }
+            // Token varsa sayfada kal
+        });
+        
+        const toast = new ToastNotification();
+        
+        function showOptions() {
+            document.getElementById('profileOptions').style.display = 'grid';
+            document.getElementById('cvUploadSection').classList.remove('active');
+            document.getElementById('profileFormSection').classList.remove('active');
+        }
+        
+        function showCVUpload() {
+            document.getElementById('profileOptions').style.display = 'none';
+            document.getElementById('cvUploadSection').classList.add('active');
+        }
+        
+        function showProfileForm() {
+            document.getElementById('profileOptions').style.display = 'none';
+            document.getElementById('profileFormSection').classList.add('active');
+        }
+        
+        // CV Upload functionality
+        const fileUpload = document.getElementById('fileUpload');
+        const cvFileInput = document.getElementById('cvFile');
+        const selectedFile = document.getElementById('selectedFile');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        
+        fileUpload.addEventListener('click', () => {
+            cvFileInput.click();
+        });
+        
+        fileUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUpload.classList.add('dragover');
+        });
+        
+        fileUpload.addEventListener('dragleave', () => {
+            fileUpload.classList.remove('dragover');
+        });
+        
+        fileUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUpload.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelection(files[0]);
+            }
+        });
+        
+        cvFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelection(e.target.files[0]);
+            }
+        });
+        
+        function handleFileSelection(file) {
+            const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            
+            if (!allowedTypes.includes(file.type)) {
+                toast.show('Sadece PDF, DOC ve DOCX dosyaları kabul edilir', 'error');
+                return;
+            }
+            
+            if (file.size > 10 * 1024 * 1024) {
+                toast.show('Dosya boyutu 10MB\'dan büyük olamaz', 'error');
+                return;
+            }
+            
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            selectedFile.style.display = 'block';
+        }
+        
+        function removeFile() {
+            cvFileInput.value = '';
+            selectedFile.style.display = 'none';
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // CV Upload Form
+        document.getElementById('cvUploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById('cvFile');
+            if (!fileInput.files.length) {
+                toast.show('Lütfen bir CV dosyası seçin', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('cv_file', fileInput.files[0]);
+            
+            try {
+                const token = localStorage.getItem('access_token');
+                const response = await fetch('/api/profile/upload-cv', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    toast.show(data.message, 'success');
+                    setTimeout(() => {
+                        window.location.href = '/static/dashboard.html';
+                    }, 2000);
+                } else {
+                    toast.show(data.detail || 'CV yükleme başarısız', 'error');
+                }
+            } catch (error) {
+                toast.show('Bağlantı hatası oluştu', 'error');
+            }
+        });
+        
+        // Profile Form - Form yüklendiğinde event listener ekle
+        document.addEventListener('DOMContentLoaded', () => {
+            const profileForm = document.getElementById('profileForm');
+            if (profileForm) {
+                profileForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(e.target);
+                    const profileData = Object.fromEntries(formData);
+                    
+                    console.log('Profil verileri:', profileData); // Debug için
+                    
+                    try {
+                        const token = localStorage.getItem('access_token');
+                        const response = await fetch('/api/profile/complete', {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify(profileData)
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (response.ok) {
+                            toast.show(data.message, 'success');
+                            setTimeout(() => {
+                                window.location.href = '/static/dashboard.html';
+                            }, 2000);
+                        } else {
+                            toast.show(data.detail || 'Profil güncelleme başarısız', 'error');
+                        }
+                    } catch (error) {
+                        console.error('Profile form error:', error);
+                        toast.show('Bağlantı hatası oluştu', 'error');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

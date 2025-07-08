@@ -379,9 +379,9 @@ class FormHandler {
             
             this.toast.show('Giriş başarılı! Yönlendiriliyorsunuz...', 'success');
             
-            // Yönlendirme (dashboard veya ana sayfa)
+            // Dashboard'a yönlendir, orada profil kontrolü yapılacak
             setTimeout(() => {
-                window.location.href = '/static/dashboard.html'; // Dashboard sayfanızın URL'i
+                window.location.href = '/static/dashboard.html';
             }, 1500);
             
         } catch (error) {
@@ -529,13 +529,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auth manager'ı başlat
     const authManager = new AuthManager();
     
-    // Eğer kullanıcı zaten giriş yapmışsa ve login/register sayfasındaysa, yönlendir
-    if (authManager.isAuthenticated() && authManager.isTokenValid()) {
-        const currentPage = window.location.pathname;
-        if (currentPage.includes('login.html') || currentPage.includes('register.html')) {
-            window.location.href = '/static/dashboard.html';
-        }
-    }
+    // Otomatik yönlendirme kaldırıldı - Manuel login gerekli
     
     // Accessibility improvements
     const inputs = document.querySelectorAll('input');

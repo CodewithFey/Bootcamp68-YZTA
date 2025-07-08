@@ -34,6 +34,8 @@ class UserResponse(BaseModel):
     profession: Optional[str] = None
     experience_level: Optional[str] = None
     career_goals: Optional[str] = None
+    profile_complete: Optional[bool] = None
+    cv_file_path: Optional[str] = None
     created_at: datetime
     
     class Config:
@@ -46,6 +48,13 @@ class UserUpdate(BaseModel):
     profession: Optional[str] = None
     experience_level: Optional[str] = None
     career_goals: Optional[str] = None
+
+# Profil tamamlama şeması
+class ProfileComplete(BaseModel):
+    full_name: str = Field(..., min_length=2, max_length=100, description="Tam ad")
+    profession: str = Field(..., min_length=2, max_length=100, description="Meslek")
+    experience_level: str = Field(..., description="Deneyim seviyesi")
+    career_goals: str = Field(..., min_length=10, description="Kariyer hedefleri")
 
 # Hedef yönetimi şemaları
 class TargetBase(BaseModel):
