@@ -203,8 +203,32 @@
         
         const toast = new ToastNotification();
         
-        function viewProfile() {
-            window.location.href = '/static/profile.html';
+        async function viewProfile() {
+            const token = localStorage.getItem('access_token');
+            try {
+                const response = await fetch('/api/profile/check-complete', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    if (data.profile_complete) {
+                        // Profil tamamlanmış, profili görüntüle
+                        window.location.href = '/static/profile.html?mode=view';
+                    } else {
+                        // Profil tamamlanmamış, profil tamamlama sayfasına yönlendir
+                        window.location.href = '/static/profile.html?mode=complete';
+                    }
+                } else {
+                    window.location.href = '/static/profile.html?mode=complete';
+                }
+            } catch (error) {
+                console.error('Profil kontrol hatası:', error);
+                window.location.href = '/static/profile.html?mode=complete';
+            }
         }
         
         function logout() {

@@ -75,3 +75,28 @@ class TargetOut(TargetBase):
 # Başarı mesajı şeması
 class Message(BaseModel):
     message: str 
+
+# Profil yönetimi şemaları
+class UserProfileOut(BaseModel):
+    username: str
+    email: str
+    full_name: Optional[str] = None
+    profession: Optional[str] = None
+    experience_level: Optional[str] = None
+    career_goals: Optional[str] = None
+    skills: Optional[str] = None
+    interests: Optional[str] = None
+    education_level: Optional[str] = None
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+class UserProfileUpdate(BaseModel):
+    full_name: Optional[str] = Field(None, description="Tam ad")
+    profession: Optional[str] = Field(None, description="Meslek/İş alanı")
+    experience_level: Optional[str] = Field(None, description="Deneyim seviyesi")
+    career_goals: Optional[str] = Field(None, description="Kariyer hedefleri")
+    skills: Optional[str] = Field(None, description="Beceriler")
+    interests: Optional[str] = Field(None, description="İlgi alanları")
+    education_level: Optional[str] = Field(None, description="Eğitim seviyesi") 

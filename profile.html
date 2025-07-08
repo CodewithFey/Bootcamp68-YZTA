@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Tamamla - Kariyer Koçu</title>
+    <title>Profil - Kariyer Koçu</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .profile-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 50px auto;
             padding: 20px;
         }
@@ -28,6 +28,154 @@
         .profile-header p {
             color: var(--secondary-color);
             font-size: 1.2rem;
+        }
+        
+        .profile-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .profile-view {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .profile-header-card {
+            background: linear-gradient(135deg, var(--primary-color), #667eea);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .profile-avatar i {
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+        }
+        
+        .profile-title {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .profile-content {
+            padding: 30px;
+        }
+        
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .profile-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .profile-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 1.2rem;
+        }
+        
+        .profile-card-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        
+        .profile-card-content {
+            color: var(--secondary-color);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .profile-card-empty {
+            color: var(--muted-text);
+            font-style: italic;
+            opacity: 0.7;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 25px 0;
+            border-top: 1px solid #e9ecef;
+            margin-top: 30px;
+        }
+        
+        .profile-stat {
+            text-align: center;
+        }
+        
+        .profile-stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+        }
+        
+        .profile-stat-label {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin: 5px 0 0 0;
+        }
+        
+        .profile-edit-form {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
         }
         
         .profile-options {
@@ -198,23 +346,73 @@
             font-size: 0.9rem;
         }
         
-        .remove-file {
-            color: var(--error-color);
-            cursor: pointer;
-            padding: 5px;
-        }
-        
-        .remove-file:hover {
-            color: var(--error-color-dark);
+        .hidden {
+            display: none !important;
         }
         
         @media (max-width: 768px) {
+            .profile-container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+            
+            .profile-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
             .profile-options {
                 grid-template-columns: 1fr;
             }
             
-            .form-actions {
+            .profile-header-card {
+                padding: 30px 20px;
+            }
+            
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+                margin: 0 auto 15px;
+            }
+            
+            .profile-avatar i {
+                font-size: 2rem;
+            }
+            
+            .profile-name {
+                font-size: 1.5rem;
+            }
+            
+            .profile-title {
+                font-size: 1rem;
+            }
+            
+            .profile-content {
+                padding: 20px;
+            }
+            
+            .profile-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .profile-card {
+                padding: 20px;
+            }
+            
+            .profile-card[style*="grid-column"] {
+                grid-column: 1 / -1 !important;
+            }
+            
+            .profile-stats {
                 flex-direction: column;
+                gap: 20px;
+            }
+            
+            .profile-stat {
+                padding: 15px;
+                background: #f8f9fa;
+                border-radius: 10px;
             }
         }
     </style>
@@ -222,113 +420,292 @@
 <body>
     <div class="profile-container">
         <div class="profile-header">
-            <h1>Profil Tamamla</h1>
-            <p>Kariyer yolculuğunuza başlamak için profilinizi tamamlayın</p>
+            <h1 id="pageTitle">Profil</h1>
+            <p id="pageDescription">Profil bilgilerinizi görüntüleyin ve düzenleyin</p>
         </div>
         
-        <div class="profile-options" id="profileOptions">
-            <div class="option-card">
-                <div class="option-icon">
-                    <i class="fas fa-file-upload"></i>
-                </div>
-                <h3>CV Yükle</h3>
-                <p>Mevcut CV'nizi yükleyin ve yapay zeka otomatik olarak profil bilgilerinizi çıkarsın</p>
-                <button class="btn btn-primary" onclick="showCVUpload()">
-                    CV Yükle
+        <!-- Profil Görüntüleme Modu -->
+        <div id="profileViewMode" class="hidden">
+            <div class="profile-actions">
+                <button class="btn btn-primary" onclick="enableEditMode()">
+                    <i class="fas fa-edit"></i> Profili Düzenle
+                </button>
+                <button class="btn-secondary" onclick="goToDashboard()">
+                    <i class="fas fa-arrow-left"></i> Dashboard'a Dön
                 </button>
             </div>
             
-            <div class="option-card">
-                <div class="option-icon">
-                    <i class="fas fa-edit"></i>
+            <div class="profile-view">
+                <div class="profile-header-card">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2 class="profile-name" id="viewFullNameHeader">-</h2>
+                    <p class="profile-title" id="viewProfessionHeader">-</p>
                 </div>
-                <h3>Form Doldur</h3>
-                <p>Profil bilgilerinizi manuel olarak girin ve detaylarınızı özelleştirin</p>
-                <button class="btn btn-primary" onclick="showProfileForm()">
-                    Form Doldur
-                </button>
+                
+                <div class="profile-content">
+                    <div class="profile-grid">
+                        <div class="profile-card">
+                            <div class="profile-card-header">
+                                <div class="profile-card-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <h3 class="profile-card-title">Kişisel Bilgiler</h3>
+                            </div>
+                            <div class="profile-card-content">
+                                <p><strong>Kullanıcı Adı:</strong> <span id="viewUsername">-</span></p>
+                                <p><strong>E-posta:</strong> <span id="viewEmail">-</span></p>
+                                <p><strong>Tam Ad:</strong> <span id="viewFullName">-</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card">
+                            <div class="profile-card-header">
+                                <div class="profile-card-icon">
+                                    <i class="fas fa-briefcase"></i>
+                                </div>
+                                <h3 class="profile-card-title">Kariyer Bilgileri</h3>
+                            </div>
+                            <div class="profile-card-content">
+                                <p><strong>Meslek:</strong> <span id="viewProfession">-</span></p>
+                                <p><strong>Deneyim Seviyesi:</strong> <span id="viewExperienceLevel">-</span></p>
+                                <p><strong>Eğitim Seviyesi:</strong> <span id="viewEducationLevel">-</span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card">
+                            <div class="profile-card-header">
+                                <div class="profile-card-icon">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <h3 class="profile-card-title">Beceriler</h3>
+                            </div>
+                            <div class="profile-card-content">
+                                <p id="viewSkills">-</p>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card">
+                            <div class="profile-card-header">
+                                <div class="profile-card-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <h3 class="profile-card-title">İlgi Alanları</h3>
+                            </div>
+                            <div class="profile-card-content">
+                                <p id="viewInterests">-</p>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-card" style="grid-column: 1 / -1;">
+                            <div class="profile-card-header">
+                                <div class="profile-card-icon">
+                                    <i class="fas fa-target"></i>
+                                </div>
+                                <h3 class="profile-card-title">Kariyer Hedefleri</h3>
+                            </div>
+                            <div class="profile-card-content">
+                                <p id="viewCareerGoals">-</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <p class="profile-stat-value">100%</p>
+                            <p class="profile-stat-label">Profil Tamamlama</p>
+                        </div>
+                        <div class="profile-stat">
+                            <p class="profile-stat-value" id="viewMemberSince">-</p>
+                            <p class="profile-stat-label">Üyelik Tarihi</p>
+                        </div>
+                        <div class="profile-stat">
+                            <p class="profile-stat-value">0</p>
+                            <p class="profile-stat-label">Tamamlanan Hedef</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <!-- CV Yükleme Formu -->
-        <div class="form-section" id="cvUploadSection">
-            <h2><i class="fas fa-file-upload"></i> CV Yükle</h2>
-            <form id="cvUploadForm">
-                <div class="form-group">
+        <!-- Profil Düzenleme Modu -->
+        <div id="profileEditMode" class="hidden">
+            <div class="profile-actions">
+                <button class="btn-back" onclick="disableEditMode()">
+                    <i class="fas fa-times"></i> Düzenlemeyi İptal
+                </button>
+            </div>
+            
+            <div class="profile-edit-form">
+                <form id="profileEditForm">
+                    <div class="form-group">
+                        <label for="editFullName">Tam Ad</label>
+                        <input type="text" id="editFullName" name="full_name" placeholder="Tam adınızı girin">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editProfession">Meslek</label>
+                        <input type="text" id="editProfession" name="profession" placeholder="Mesleğinizi girin">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editExperienceLevel">Deneyim Seviyesi</label>
+                        <select id="editExperienceLevel" name="experience_level">
+                            <option value="">Seçiniz</option>
+                            <option value="Başlangıç">Başlangıç (0-2 yıl)</option>
+                            <option value="Orta">Orta (2-5 yıl)</option>
+                            <option value="İleri">İleri (5-10 yıl)</option>
+                            <option value="Uzman">Uzman (10+ yıl)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editEducationLevel">Eğitim Seviyesi</label>
+                        <select id="editEducationLevel" name="education_level">
+                            <option value="">Seçiniz</option>
+                            <option value="Lise">Lise</option>
+                            <option value="Önlisans">Önlisans</option>
+                            <option value="Lisans">Lisans</option>
+                            <option value="Yüksek Lisans">Yüksek Lisans</option>
+                            <option value="Doktora">Doktora</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editSkills">Beceriler</label>
+                        <input type="text" id="editSkills" name="skills" placeholder="Becerilerinizi virgülle ayırarak girin">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editInterests">İlgi Alanları</label>
+                        <input type="text" id="editInterests" name="interests" placeholder="İlgi alanlarınızı virgülle ayırarak girin">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editCareerGoals">Kariyer Hedefleri</label>
+                        <textarea id="editCareerGoals" name="career_goals" placeholder="Kariyer hedeflerinizi detaylı bir şekilde açıklayın..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Değişiklikleri Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Profil Tamamlama Modu -->
+        <div id="profileCompleteMode" class="hidden">
+            <div class="profile-options" id="profileOptions">
+                <div class="option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-file-upload"></i>
+                    </div>
+                    <h3>CV Yükle</h3>
+                    <p>Mevcut CV dosyanızı yükleyerek profilinizi hızlıca tamamlayın. PDF, DOC veya DOCX formatında dosyalar kabul edilir.</p>
+                    <button class="btn btn-primary" onclick="showCVUpload()">
+                        <i class="fas fa-upload"></i> CV Yükle
+                    </button>
+                </div>
+                
+                <div class="option-card">
+                    <div class="option-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3>Manuel Giriş</h3>
+                    <p>Profil bilgilerinizi elle girerek kariyerinizi detaylı bir şekilde tanımlayın ve hedeflerinizi belirleyin.</p>
+                    <button class="btn btn-primary" onclick="showProfileForm()">
+                        <i class="fas fa-pen"></i> Bilgileri Gir
+                    </button>
+                </div>
+            </div>
+            
+            <!-- CV Upload Section -->
+            <div class="form-section" id="cvUploadSection">
+                <h3><i class="fas fa-file-upload"></i> CV Dosyası Yükle</h3>
+                <p>Profilinizi hızlıca tamamlamak için CV dosyanızı yükleyin.</p>
+                
+                <form id="cvUploadForm">
                     <div class="file-upload" id="fileUpload">
-                        <input type="file" id="cvFile" accept=".pdf,.doc,.docx" style="display: none;">
                         <div class="file-upload-icon">
                             <i class="fas fa-cloud-upload-alt"></i>
                         </div>
                         <div class="file-upload-text">
-                            CV dosyanızı sürükleyip bırakın veya seçin
+                            CV dosyanızı buraya sürükleyip bırakın veya seçmek için tıklayın
                         </div>
                         <div class="file-upload-info">
-                            PDF, DOC veya DOCX formatında, maksimum 10MB
+                            Desteklenen formatlar: PDF, DOC, DOCX (Maksimum 10MB)
                         </div>
+                        <input type="file" id="cvFile" accept=".pdf,.doc,.docx" style="display: none;">
                     </div>
+                    
                     <div class="selected-file" id="selectedFile" style="display: none;">
                         <div class="selected-file-info">
                             <div>
                                 <div class="selected-file-name" id="fileName"></div>
                                 <div class="selected-file-size" id="fileSize"></div>
                             </div>
-                            <div class="remove-file" onclick="removeFile()">
+                            <button type="button" class="btn btn-danger" onclick="removeFile()">
                                 <i class="fas fa-times"></i>
-                            </div>
+                            </button>
                         </div>
                     </div>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn-back" onclick="showOptions()">
-                        <i class="fas fa-arrow-left"></i> Geri
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-upload"></i> CV'yi Yükle
-                    </button>
-                </div>
-            </form>
-        </div>
-        
-        <!-- Profil Formu -->
-        <div class="form-section" id="profileFormSection">
-            <h2><i class="fas fa-edit"></i> Profil Bilgileri</h2>
-            <form id="profileForm">
-                <div class="form-group">
-                    <label for="full_name">Tam Ad *</label>
-                    <input type="text" id="full_name" name="full_name" required placeholder="Adınızı ve soyadınızı girin">
-                </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-back" onclick="showOptions()">
+                            <i class="fas fa-arrow-left"></i> Geri
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-upload"></i> CV'yi Yükle
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Profile Form Section -->
+            <div class="form-section" id="profileFormSection">
+                <h3><i class="fas fa-user-edit"></i> Profil Bilgilerini Gir</h3>
+                <p>Kariyer bilgilerinizi detaylı bir şekilde girin ve hedeflerinizi belirleyin.</p>
                 
-                <div class="form-group">
-                    <label for="profession">Meslek *</label>
-                    <input type="text" id="profession" name="profession" required placeholder="Mesleğinizi girin">
-                </div>
-                
-                <div class="form-group">
-                    <label for="experience_level">Deneyim Seviyesi *</label>
-                    <select id="experience_level" name="experience_level" required>
-                        <option value="">Seçiniz</option>
-                        <option value="Başlangıç">Başlangıç (0-2 yıl)</option>
-                        <option value="Orta">Orta (2-5 yıl)</option>
-                        <option value="İleri">İleri (5-10 yıl)</option>
-                        <option value="Uzman">Uzman (10+ yıl)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="career_goals">Kariyer Hedefleri *</label>
-                    <textarea id="career_goals" name="career_goals" required placeholder="Kariyer hedeflerinizi detaylı bir şekilde açıklayın..."></textarea>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="button" class="btn-back" onclick="showOptions()">
-                        <i class="fas fa-arrow-left"></i> Geri
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Profili Kaydet
-                    </button>
-                </div>
-            </form>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="full_name">Tam Ad *</label>
+                        <input type="text" id="full_name" name="full_name" required placeholder="Tam adınızı girin">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="profession">Meslek *</label>
+                        <input type="text" id="profession" name="profession" required placeholder="Mesleğinizi girin">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience_level">Deneyim Seviyesi *</label>
+                        <select id="experience_level" name="experience_level" required>
+                            <option value="">Seçiniz</option>
+                            <option value="Başlangıç">Başlangıç (0-2 yıl)</option>
+                            <option value="Orta">Orta (2-5 yıl)</option>
+                            <option value="İleri">İleri (5-10 yıl)</option>
+                            <option value="Uzman">Uzman (10+ yıl)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="career_goals">Kariyer Hedefleri *</label>
+                        <textarea id="career_goals" name="career_goals" required placeholder="Kariyer hedeflerinizi detaylı bir şekilde açıklayın..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn-back" onclick="showOptions()">
+                            <i class="fas fa-arrow-left"></i> Geri
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Profili Kaydet
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     
@@ -341,19 +718,164 @@
     
     <script src="script.js"></script>
     <script>
-        // Auth check - Sadece token kontrolü
-        document.addEventListener('DOMContentLoaded', () => {
+        // Global variables
+        let currentMode = 'view';
+        let currentProfile = null;
+        const toast = new ToastNotification();
+        
+        // Auth check ve sayfa yüklenme
+        document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('access_token');
             
             if (!token) {
-                // Token yoksa login sayfasına yönlendir
                 window.location.href = '/static/login.html';
+                return;
             }
-            // Token varsa sayfada kal
+            
+            // URL parametresini kontrol et
+            const urlParams = new URLSearchParams(window.location.search);
+            const mode = urlParams.get('mode') || 'view';
+            
+            if (mode === 'complete') {
+                showCompleteMode();
+            } else {
+                await loadProfile();
+            }
         });
         
-        const toast = new ToastNotification();
+        // Profil yükleme
+        async function loadProfile() {
+            const token = localStorage.getItem('access_token');
+            
+            try {
+                const response = await fetch('/api/me/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    currentProfile = await response.json();
+                    showViewMode();
+                    populateViewMode();
+                } else {
+                    showCompleteMode();
+                }
+            } catch (error) {
+                console.error('Profil yükleme hatası:', error);
+                showCompleteMode();
+            }
+        }
         
+        // Görüntüleme modunu göster
+        function showViewMode() {
+            currentMode = 'view';
+            document.getElementById('pageTitle').textContent = 'Profil Bilgileri';
+            document.getElementById('pageDescription').textContent = 'Profil bilgilerinizi görüntüleyin ve düzenleyin';
+            
+            document.getElementById('profileViewMode').classList.remove('hidden');
+            document.getElementById('profileEditMode').classList.add('hidden');
+            document.getElementById('profileCompleteMode').classList.add('hidden');
+        }
+        
+        // Düzenleme modunu göster
+        function enableEditMode() {
+            currentMode = 'edit';
+            document.getElementById('pageTitle').textContent = 'Profil Düzenle';
+            document.getElementById('pageDescription').textContent = 'Profil bilgilerinizi güncelleyin';
+            
+            document.getElementById('profileViewMode').classList.add('hidden');
+            document.getElementById('profileEditMode').classList.remove('hidden');
+            document.getElementById('profileCompleteMode').classList.add('hidden');
+            
+            populateEditMode();
+        }
+        
+        // Düzenleme modunu kapat
+        function disableEditMode() {
+            showViewMode();
+        }
+        
+        // Profil tamamlama modunu göster
+        function showCompleteMode() {
+            currentMode = 'complete';
+            document.getElementById('pageTitle').textContent = 'Profil Tamamla';
+            document.getElementById('pageDescription').textContent = 'Kariyer yolculuğunuzu başlatmak için profilinizi tamamlayın';
+            
+            document.getElementById('profileViewMode').classList.add('hidden');
+            document.getElementById('profileEditMode').classList.add('hidden');
+            document.getElementById('profileCompleteMode').classList.remove('hidden');
+            
+            showOptions();
+        }
+        
+        // Görüntüleme moduna verileri yerleştir
+        function populateViewMode() {
+            if (!currentProfile) return;
+            
+            // Header bilgileri
+            document.getElementById('viewFullNameHeader').textContent = currentProfile.full_name || currentProfile.username || 'Kullanıcı';
+            document.getElementById('viewProfessionHeader').textContent = currentProfile.profession || 'Meslek belirtilmemiş';
+            
+            // Kişisel bilgiler
+            document.getElementById('viewUsername').textContent = currentProfile.username || '-';
+            document.getElementById('viewEmail').textContent = currentProfile.email || '-';
+            document.getElementById('viewFullName').textContent = currentProfile.full_name || '-';
+            
+            // Kariyer bilgileri
+            document.getElementById('viewProfession').textContent = currentProfile.profession || '-';
+            document.getElementById('viewExperienceLevel').textContent = currentProfile.experience_level || '-';
+            document.getElementById('viewEducationLevel').textContent = currentProfile.education_level || '-';
+            
+            // Beceriler ve ilgi alanları
+            document.getElementById('viewSkills').textContent = currentProfile.skills || '-';
+            document.getElementById('viewInterests').textContent = currentProfile.interests || '-';
+            document.getElementById('viewCareerGoals').textContent = currentProfile.career_goals || '-';
+            
+            // Üyelik tarihi
+            if (currentProfile.created_at) {
+                const date = new Date(currentProfile.created_at);
+                document.getElementById('viewMemberSince').textContent = date.toLocaleDateString('tr-TR', { 
+                    year: 'numeric', 
+                    month: 'long' 
+                });
+            }
+            
+            // Boş alanları işaretle
+            const fields = [
+                'viewUsername', 'viewEmail', 'viewFullName', 'viewProfession', 
+                'viewExperienceLevel', 'viewEducationLevel', 'viewSkills', 
+                'viewInterests', 'viewCareerGoals'
+            ];
+            
+            fields.forEach(fieldId => {
+                const element = document.getElementById(fieldId);
+                if (element && (element.textContent === '-' || element.textContent === '')) {
+                    element.classList.add('profile-card-empty');
+                    element.textContent = 'Belirtilmemiş';
+                }
+            });
+        }
+        
+        // Düzenleme moduna verileri yerleştir
+        function populateEditMode() {
+            if (!currentProfile) return;
+            
+            document.getElementById('editFullName').value = currentProfile.full_name || '';
+            document.getElementById('editProfession').value = currentProfile.profession || '';
+            document.getElementById('editExperienceLevel').value = currentProfile.experience_level || '';
+            document.getElementById('editEducationLevel').value = currentProfile.education_level || '';
+            document.getElementById('editSkills').value = currentProfile.skills || '';
+            document.getElementById('editInterests').value = currentProfile.interests || '';
+            document.getElementById('editCareerGoals').value = currentProfile.career_goals || '';
+        }
+        
+        // Dashboard'a git
+        function goToDashboard() {
+            window.location.href = '/static/dashboard.html';
+        }
+        
+        // Profil tamamlama fonksiyonları
         function showOptions() {
             document.getElementById('profileOptions').style.display = 'grid';
             document.getElementById('cvUploadSection').classList.remove('active');
@@ -369,6 +891,46 @@
             document.getElementById('profileOptions').style.display = 'none';
             document.getElementById('profileFormSection').classList.add('active');
         }
+        
+        // Profil düzenleme form
+        document.getElementById('profileEditForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const profileData = {};
+            
+            // Sadece değişen alanları gönder
+            for (let [key, value] of formData.entries()) {
+                if (value.trim() !== '') {
+                    profileData[key] = value.trim();
+                }
+            }
+            
+            try {
+                const token = localStorage.getItem('access_token');
+                const response = await fetch('/api/me/profile', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(profileData)
+                });
+                
+                if (response.ok) {
+                    currentProfile = await response.json();
+                    toast.show('Profil başarıyla güncellendi', 'success');
+                    showViewMode();
+                    populateViewMode();
+                } else {
+                    const error = await response.json();
+                    toast.show(error.detail || 'Profil güncelleme başarısız', 'error');
+                }
+            } catch (error) {
+                console.error('Profil güncelleme hatası:', error);
+                toast.show('Bağlantı hatası oluştu', 'error');
+            }
+        });
         
         // CV Upload functionality
         const fileUpload = document.getElementById('fileUpload');
@@ -474,44 +1036,37 @@
             }
         });
         
-        // Profile Form - Form yüklendiğinde event listener ekle
-        document.addEventListener('DOMContentLoaded', () => {
-            const profileForm = document.getElementById('profileForm');
-            if (profileForm) {
-                profileForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    
-                    const formData = new FormData(e.target);
-                    const profileData = Object.fromEntries(formData);
-                    
-                    console.log('Profil verileri:', profileData); // Debug için
-                    
-                    try {
-                        const token = localStorage.getItem('access_token');
-                        const response = await fetch('/api/profile/complete', {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${token}`
-                            },
-                            body: JSON.stringify(profileData)
-                        });
-                        
-                        const data = await response.json();
-                        
-                        if (response.ok) {
-                            toast.show(data.message, 'success');
-                            setTimeout(() => {
-                                window.location.href = '/static/dashboard.html';
-                            }, 2000);
-                        } else {
-                            toast.show(data.detail || 'Profil güncelleme başarısız', 'error');
-                        }
-                    } catch (error) {
-                        console.error('Profile form error:', error);
-                        toast.show('Bağlantı hatası oluştu', 'error');
-                    }
+        // Profile Form
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const profileData = Object.fromEntries(formData);
+            
+            try {
+                const token = localStorage.getItem('access_token');
+                const response = await fetch('/api/profile/complete', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(profileData)
                 });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    toast.show(data.message, 'success');
+                    setTimeout(() => {
+                        window.location.href = '/static/dashboard.html';
+                    }, 2000);
+                } else {
+                    toast.show(data.detail || 'Profil güncelleme başarısız', 'error');
+                }
+            } catch (error) {
+                console.error('Profile form error:', error);
+                toast.show('Bağlantı hatası oluştu', 'error');
             }
         });
     </script>

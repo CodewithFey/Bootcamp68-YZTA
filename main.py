@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 from database import engine, Base
-from routes import user, targets
+from routes import user, targets, profile
 import uvicorn
 
 # Veritabanı tablolarını oluştur
@@ -28,6 +28,7 @@ app.add_middleware(
 # Router'ları dahil et
 app.include_router(user.router, prefix="/api", tags=["Kullanıcı Yönetimi"])
 app.include_router(targets.router, prefix="/api", tags=["Hedef Yönetimi"])
+app.include_router(profile.router, prefix="/api", tags=["Profil Yönetimi"])
 
 # Static files için mount (CSS, JS, images vb.)
 app.mount("/static", StaticFiles(directory="."), name="static")

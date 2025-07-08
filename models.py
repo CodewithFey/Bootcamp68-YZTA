@@ -15,6 +15,10 @@ class User(Base):
     profession = Column(String, nullable=True)  # Meslek
     experience_level = Column(String, nullable=True)  # Deneyim seviyesi
     career_goals = Column(Text, nullable=True)  # Kariyer hedefleri
+    # Profil yönetimi için ek alanlar
+    skills = Column(String, nullable=True)  # Beceriler
+    interests = Column(String, nullable=True)  # İlgi alanları
+    education_level = Column(String, nullable=True)  # Eğitim seviyesi
     profile_complete = Column(Boolean, default=False)  # Profil tamamlama durumu
     cv_file_path = Column(String, nullable=True)  # CV dosya yolu
     created_at = Column(DateTime(timezone=True), server_default=func.now())
