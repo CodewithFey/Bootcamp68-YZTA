@@ -46,7 +46,7 @@ PathMentor, kullanıcıların CV’lerini yükleyerek kariyer hedeflerine göre 
   
 ### Sprint Board
 ![Ekran Görüntüsü](./Ekran%20görüntüsü%202025-07-06%20205854.png)
-
+![Ekran Görüntüsü](./Adsız%20tasarım.png)
 
 * Sprint içinde tamamlanması beklenen puan 100 olarak belirlenmiştir.
   
