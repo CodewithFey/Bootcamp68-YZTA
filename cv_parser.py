@@ -1,6 +1,8 @@
 import re
 import spacy
 from pdfminer.high_level import extract_text
+from missing_skills import find_missing_skills
+import job_roles
 
 # İngilizce model yüklü olduğunu varsayıyorum
 nlp = spacy.load("en_core_web_sm")
@@ -75,10 +77,26 @@ def main(pdf_path):
 
     return final_data
 
+
+def clean_skill_text(skill_text):
+    # Virgülle veya yeni satırla ayrılmış becerileri ayıkla
+    skills = re.split(r"[,\n]", skill_text)
+    return [s.strip().lower() for s in skills if s.strip()]
+
 #Test
 if __name__ == "__main__":
-    pdf_path = r"C:\Users\Yusuf Açık\Desktop\STAJ\ingilizce-cv-ornegi.pdf"
+    pdf_path = r"C:\Users\Yusuf Açık\Desktop\STAJ\S.pdf"
     data = main(pdf_path)
 
-    import json
-    print(json.dumps(data, ensure_ascii=False, indent=4))
+    # import json
+    # print(json.dumps(data, ensure_ascii=False, indent=4))
+
+    
+    # Test kısmı 
+    cv_skills = data["skills"]
+    clean_skils=clean_skill_text(cv_skills)
+    target = "ai developer"
+
+    missing = find_missing_skills(clean_skils, target)
+
+    print("Eksik beceriler:", missing)
