@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Kariyer Koçu</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css?v=2024012003">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="dashboard-page">
     <!-- Navigation -->
     <div class="nav-header">
-        <div class="nav-brand">🎯 Kariyer Koçu</div>
+        <div class="nav-brand">
+            <i class="fas fa-chart-line"></i>
+            Kariyer Koçu
+        </div>
         <div class="nav-menu">
             <a href="/" class="nav-link">Ana Sayfa</a>
             <a href="/templates/dashboard.html" class="nav-link">Dashboard</a>
@@ -24,127 +27,281 @@
     </div>
 
     <div class="dashboard-container">
-        <!-- Profil Durumu Göstergesi -->
-        <div id="profileStatus" class="profile-status hidden">
-            <div class="status-content">
-                <div class="status-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
+        <div class="dashboard-grid">
+            <!-- Hoş Geldiniz Kartı -->
+            <div class="dashboard-card welcome-card">
+                <div class="card-header">
+                    <div class="card-icon-header">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="card-title-section">
+                        <h2 id="welcomeTitle">Hoş Geldiniz!</h2>
+                        <p id="welcomeDescription">Kariyer yolculuğunuza devam etmeye hazır mısınız?</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="viewProfile()">
+                            <i class="fas fa-user"></i> <span>Profil</span>
+                        </button>
+                        <button class="btn btn-secondary btn-sm" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> <span>Çıkış</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="status-text">
-                    <h3>Profilinizi Tamamlayın</h3>
-                    <p>Daha iyi kariyer önerileri almak için profilinizi tamamlayın.</p>
+                <div class="card-content">
+                    <div id="profileProgress" class="progress-indicator hidden">
+                        <span class="progress-label">Profil Tamamlama:</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <span class="progress-text" id="progressText">0%</span>
+                    </div>
                 </div>
-                <div class="status-action">
+            </div>
+
+            <!-- Profil Durumu Kartı -->
+            <div id="profileStatus" class="dashboard-card status-card hidden">
+                <div class="card-header">
+                    <div class="card-icon-header warning">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="card-title-section">
+                        <h3>Profilinizi Tamamlayın</h3>
+                        <p>Daha iyi kariyer önerileri almak için profilinizi tamamlayın.</p>
+                    </div>
+                    <button class="status-close" onclick="hideProfileStatus()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="card-content">
                     <a href="/templates/profile.html?mode=complete" class="btn btn-primary">
-                        <i class="fas fa-user-edit"></i> Profil Tamamla
+                        <i class="fas fa-user-edit"></i> <span>Profil Tamamla</span>
                     </a>
                 </div>
             </div>
-            <button class="status-close" onclick="hideProfileStatus()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        
-        <div class="dashboard-header">
-            <div class="welcome-section">
-                <h1 id="welcomeTitle">Hoş Geldiniz!</h1>
-                <p id="welcomeDescription">Kariyer yolculuğunuza devam etmeye hazır mısınız?</p>
-                <div id="profileProgress" class="progress-indicator hidden">
-                    <span class="progress-label">Profil Tamamlama:</span>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
+
+            <!-- Kariyer Adımları Kartı -->
+            <div id="onboardingGuide" class="dashboard-card steps-card hidden">
+                <div class="card-header">
+                    <div class="card-icon-header">
+                        <i class="fas fa-rocket"></i>
                     </div>
-                    <span class="progress-text" id="progressText">0%</span>
-                </div>
-            </div>
-            <div class="user-actions">
-                <button class="btn-secondary" onclick="viewProfile()">
-                    <i class="fas fa-user"></i> Profil
-                </button>
-                <button class="btn-secondary" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i> Çıkış
-                </button>
-            </div>
-        </div>
-        
-        <!-- Başlangıç Rehberi (Yeni Kullanıcılar İçin) -->
-        <div id="onboardingGuide" class="onboarding-guide hidden">
-            <div class="guide-header">
-                <h2><i class="fas fa-rocket"></i> Kariyer Yolculuğunuza Başlayın!</h2>
-                <p>Size özel hazırlanmış bu adımları takip ederek platform özelliklerini keşfedin.</p>
-            </div>
-            <div class="guide-steps">
-                <div class="guide-step completed" data-step="1">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Hesap Oluşturuldu</h3>
-                        <p>Platforma başarıyla kaydoldunuz!</p>
+                    <div class="card-title-section">
+                        <h3>Kariyer Yolculuğunuza Başlayın!</h3>
+                        <p>Size özel hazırlanmış bu adımları takip ederek platform özelliklerini keşfedin.</p>
                     </div>
-                    <div class="step-icon"><i class="fas fa-check"></i></div>
+                    <button class="guide-close" onclick="hideOnboardingGuide()">
+                        <i class="fas fa-times"></i> <span>Rehberi Kapat</span>
+                    </button>
                 </div>
-                <div class="guide-step active" data-step="2">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>Profil Tamamlama</h3>
-                        <p>Kişisel bilgilerinizi ve kariyer hedeflerinizi ekleyin.</p>
-                        <a href="/templates/profile.html?mode=complete" class="step-action">Profili Tamamla</a>
+                <div class="card-content">
+                    <div class="guide-steps">
+                        <div class="guide-step completed" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Hesap Oluşturuldu</h4>
+                                <p>Platforma başarıyla kaydoldunuz!</p>
+                            </div>
+                            <div class="step-icon"><i class="fas fa-check"></i></div>
+                        </div>
+                        <div class="guide-step active" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Profil Tamamlama</h4>
+                                <p>Kişisel bilgilerinizi ve kariyer hedeflerinizi ekleyin.</p>
+                                <a href="/templates/profile.html?mode=complete" class="step-action">Profili Tamamla</a>
+                            </div>
+                            <div class="step-icon"><i class="fas fa-user-edit"></i></div>
+                        </div>
+                        <div class="guide-step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Hedef Belirleme</h4>
+                                <p>Kariyer hedeflerinizi detaylandırın ve takip edin.</p>
+                            </div>
+                            <div class="step-icon"><i class="fas fa-target"></i></div>
+                        </div>
+                        <div class="guide-step" data-step="4">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>AI Koç ile Tanışma</h4>
+                                <p>Yapay zeka destekli kariyer koçunuzdan öneriler alın.</p>
+                            </div>
+                            <div class="step-icon"><i class="fas fa-robot"></i></div>
+                        </div>
                     </div>
-                    <div class="step-icon"><i class="fas fa-user-edit"></i></div>
                 </div>
-                <div class="guide-step" data-step="3">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3>Hedef Belirleme</h3>
-                        <p>Kariyer hedeflerinizi detaylandırın ve takip edin.</p>
-                    </div>
-                    <div class="step-icon"><i class="fas fa-target"></i></div>
-                </div>
-                <div class="guide-step" data-step="4">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h3>AI Koç ile Tanışma</h3>
-                        <p>Yapay zeka destekli kariyer koçunuzdan öneriler alın.</p>
-                    </div>
-                    <div class="step-icon"><i class="fas fa-robot"></i></div>
-                </div>
-            </div>
-            <button class="guide-close" onclick="hideOnboardingGuide()">
-                <i class="fas fa-times"></i> Rehberi Kapat
-            </button>
-        </div>
-        
-        <div class="dashboard-content">
-            <div class="card">
-                <div class="card-icon">
-                    <i class="fas fa-target"></i>
-                </div>
-                <h3>Kariyer Hedefleri</h3>
-                <p>Kariyerinizde ulaşmak istediğiniz hedefleri belirleyin ve takip edin.</p>
-                <button class="btn btn-primary" onclick="manageGoals()">
-                    Hedefleri Yönet
-                </button>
             </div>
             
-            <div class="card">
-                <div class="card-icon">
-                    <i class="fas fa-chart-line"></i>
+            <!-- Ana Özellikler -->
+            <div class="dashboard-card feature-card">
+                <div class="card-header">
+                    <div class="card-icon-header">
+                        <i class="fas fa-target"></i>
+                    </div>
+                    <div class="card-title-section">
+                        <h3>Kariyer Hedefleri</h3>
+                        <p>Kariyerinizde ulaşmak istediğiniz hedefleri belirleyin ve takip edin.</p>
+                    </div>
                 </div>
-                <h3>İlerleme Raporu</h3>
-                <p>Kariyer gelişiminizi analiz edin ve hangi alanlarda iyileştirme yapabileceğinizi öğrenin.</p>
-                <button class="btn btn-primary" onclick="viewProgress()">
-                    Raporu Görüntüle
-                </button>
+                <div class="card-content">
+                    <button class="btn btn-primary" onclick="showTargetForm()">
+                        <i class="fas fa-plus"></i> <span>Hedef Ekle</span>
+                    </button>
+                    <div id="targetsList" class="targets-list hidden"></div>
+                </div>
             </div>
             
-            <div class="card">
-                <div class="card-icon">
-                    <i class="fas fa-robot"></i>
+            <!-- Hedef Belirleme Formu Kartı -->
+            <div id="targetFormCard" class="dashboard-card target-form-card hidden">
+                <div class="card-header">
+                    <div class="card-icon-header">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="card-title-section">
+                        <h3>Hedef Şirket ve Pozisyon</h3>
+                        <p>Çalışmak istediğiniz şirket ve pozisyonu belirleyin.</p>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" onclick="hideTargetForm()">
+                        <i class="fas fa-times"></i> <span>İptal</span>
+                    </button>
                 </div>
-                <h3>AI Kariyer Koçu</h3>
-                <p>Yapay zeka destekli kariyer koçunuzla kişiselleştirilmiş tavsiyeler alın.</p>
-                <button class="btn btn-primary" onclick="chatWithAI()">
-                    Koçla Konuş
-                </button>
+                <div class="card-content">
+                    <!-- Şirket Seçimi -->
+                    <div class="company-selection">
+                        <h4>Popüler Şirketler</h4>
+                        <p>Aşağıdaki şirketlerden birini seçin veya kendi şirketinizi yazın:</p>
+                        
+                        <div class="company-grid">
+                            <div class="company-card" onclick="selectCompany('Google')">
+                                <div class="company-logo google">G</div>
+                                <div class="company-info">
+                                    <h5>Google</h5>
+                                    <p>Arama ve teknoloji devi</p>
+                                </div>
+                            </div>
+                            
+                            <div class="company-card" onclick="selectCompany('Microsoft')">
+                                <div class="company-logo microsoft">MS</div>
+                                <div class="company-info">
+                                    <h5>Microsoft</h5>
+                                    <p>Yazılım ve bulut teknolojileri</p>
+                                </div>
+                            </div>
+                            
+                            <div class="company-card" onclick="selectCompany('Apple')">
+                                <div class="company-logo apple">🍎</div>
+                                <div class="company-info">
+                                    <h5>Apple</h5>
+                                    <p>İnovatif teknoloji ürünleri</p>
+                                </div>
+                            </div>
+                            
+                            <div class="company-card" onclick="selectCompany('Amazon')">
+                                <div class="company-logo amazon">A</div>
+                                <div class="company-info">
+                                    <h5>Amazon</h5>
+                                    <p>E-ticaret ve AWS</p>
+                                </div>
+                            </div>
+                            
+                            <div class="company-card" onclick="selectCompany('Meta')">
+                                <div class="company-logo meta">f</div>
+                                <div class="company-info">
+                                    <h5>Meta</h5>
+                                    <p>Sosyal medya ve VR</p>
+                                </div>
+                            </div>
+                            
+                            <div class="company-card" onclick="selectCompany('Netflix')">
+                                <div class="company-logo netflix">N</div>
+                                <div class="company-info">
+                                    <h5>Netflix</h5>
+                                    <p>Streaming ve eğlence</p>
+                                </div>
+                            </div>
+                            
+                            <div class="company-card" onclick="selectCompany('Tesla')">
+                                <div class="company-logo tesla">T</div>
+                                <div class="company-info">
+                                    <h5>Tesla</h5>
+                                    <p>Elektrikli araç teknolojileri</p>
+                                </div>
+                            </div>
+                            
+                            <div class="company-card" onclick="selectCompany('Spotify')">
+                                <div class="company-logo spotify">♪</div>
+                                <div class="company-info">
+                                    <h5>Spotify</h5>
+                                    <p>Müzik streaming</p>
+                                </div>
+                            </div>
+                            
+                            <div class="company-card custom" onclick="selectCustomCompany()">
+                                <div class="company-logo custom-logo">+</div>
+                                <div class="company-info">
+                                    <h5>Diğer</h5>
+                                    <p>Kendi şirketinizi yazın</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Form -->
+                    <form id="targetForm" class="target-form">
+                        <div class="form-group">
+                            <label for="targetCompany">Seçilen Şirket *</label>
+                            <input type="text" id="targetCompany" name="company" required 
+                                   placeholder="Yukarıdan bir şirket seçin veya yazın..." readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="targetRole">Hedef Pozisyon *</label>
+                            <input type="text" id="targetRole" name="role" required 
+                                   placeholder="Örn: Software Engineer, Product Manager...">
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                                <i class="fas fa-undo"></i> <span>Sıfırla</span>
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> <span>Hedefi Kaydet</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="dashboard-card feature-card">
+                <div class="card-header">
+                    <div class="card-icon-header">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="card-title-section">
+                        <h3>İlerleme Raporu</h3>
+                        <p>Kariyer gelişiminizi analiz edin ve hangi alanlarda iyileştirme yapabileceğinizi öğrenin.</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <button class="btn btn-primary" onclick="viewProgress()">
+                        <i class="fas fa-eye"></i> <span>Raporu Görüntüle</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="dashboard-card feature-card">
+                <div class="card-header">
+                    <div class="card-icon-header">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="card-title-section">
+                        <h3>AI Kariyer Koçu</h3>
+                        <p>Yapay zeka destekli kariyer koçunuzla kişiselleştirilmiş tavsiyeler alın.</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <button class="btn btn-primary" onclick="chatWithAI()">
+                        <i class="fas fa-comments"></i> <span>Koçla Konuş</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -212,11 +369,8 @@
                 profileStatus.classList.remove('hidden');
                 profileProgress.classList.remove('hidden');
                 
-                // İlerleme yüzdesini hesapla
-                let completionPercent = 0;
-                const fields = ['has_profile_data', 'has_cv'];
-                const completedFields = fields.filter(field => profileData[field]).length;
-                completionPercent = Math.round((completedFields / fields.length) * 100);
+                // İlerleme yüzdesini al (API'dan gelen)
+                const completionPercent = profileData.completion_percentage || 0;
                 
                 // İlerleme çubuğunu güncelle
                 const progressFill = document.getElementById('progressFill');
@@ -224,18 +378,40 @@
                 progressFill.style.width = completionPercent + '%';
                 progressText.textContent = completionPercent + '%';
                 
-                // Uyarı göster
-                if (completionPercent < 50) {
+                // Durum mesajları
+                if (profileData.next_step === 'set_targets') {
+                    // CV yüklendi, şimdi hedef belirlemeli
+                    document.getElementById('profileStatus').querySelector('h3').textContent = 'Hedef Şirket ve Pozisyon Belirleyin';
+                    document.getElementById('profileStatus').querySelector('p').textContent = 'CV\'niz başarıyla yüklendi! Şimdi hedef şirket ve pozisyonunuzu belirleyin.';
+                    document.getElementById('profileStatus').querySelector('a').href = '#';
+                    document.getElementById('profileStatus').querySelector('a').onclick = () => showTargetForm();
+                    document.getElementById('profileStatus').querySelector('a span').textContent = 'Hedef Belirle';
+                    document.getElementById('profileStatus').querySelector('a i').className = 'fas fa-target';
+                    
+                    toast.show('Harika! CV yüklendi. Şimdi hedef şirket ve pozisyonunuzu belirleyin.', 'info', 5000);
+                } else if (profileData.next_step === 'upload_cv_or_complete_profile') {
+                    // Henüz CV yüklenmemiş veya profil tamamlanmamış
                     toast.show('Profilinizi tamamlayarak daha iyi öneriler alın!', 'warning', 5000);
                 }
             } else {
                 // Profil tamamlanmış
                 profileStatus.classList.add('hidden');
-                profileProgress.classList.add('hidden');
+                profileProgress.classList.remove('hidden');
+                
+                // %100 göster
+                const progressFill = document.getElementById('progressFill');
+                const progressText = document.getElementById('progressText');
+                progressFill.style.width = '100%';
+                progressText.textContent = '100%';
                 
                 // Başarı mesajı
                 document.getElementById('welcomeDescription').textContent = 
-                    'Profiliniz tamamlanmış! Şimdi kariyer hedefleriniz üzerinde çalışabilirsiniz.';
+                    `Tebrikler! Profiliniz tamamlandı. ${profileData.targets_count} hedef belirlendi.`;
+                    
+                // Başarı toast'ı göster
+                setTimeout(() => {
+                    toast.show('Profil tamamlama başarılı! Artık tüm özellikleri kullanabilirsiniz.', 'success', 4000);
+                }, 1000);
             }
         }
         
@@ -243,7 +419,7 @@
         function updateOnboardingGuide(profileData) {
             const onboardingGuide = document.getElementById('onboardingGuide');
             
-            // Yeni kullanıcı kontrolü (profil tamamlanmamış)
+            // Profil tamamlanmamışsa rehberi göster
             if (!profileData.profile_complete) {
                 // LocalStorage'dan rehber durumunu kontrol et
                 const guideHidden = localStorage.getItem('onboarding_hidden');
@@ -254,25 +430,43 @@
                     // Adım durumlarını güncelle
                     updateGuideSteps(profileData);
                 }
+            } else {
+                // Profil tamamlandıysa rehberi gizle ve başarı mesajı göster
+                onboardingGuide.classList.add('hidden');
+                
+                // Tamamlanma mesajını göster
+                document.getElementById('welcomeDescription').textContent = 
+                    'Profiliniz başarıyla tamamlandı! Şimdi kariyer hedeflerinizi belirleyebilirsiniz.';
             }
         }
         
-        // Rehber adımlarını güncelle
+                    // Rehber adımlarını güncelle
         function updateGuideSteps(profileData) {
             const steps = document.querySelectorAll('.guide-step');
             
+            // Tüm adımları önce resetle
+            steps.forEach(step => {
+                step.classList.remove('completed', 'active');
+            });
+            
             // Adım 1: Hesap oluşturuldu (her zaman tamamlanmış)
             steps[0].classList.add('completed');
-            steps[0].classList.remove('active');
             
-            // Adım 2: Profil tamamlama
-            if (profileData.has_profile_data) {
+            // Adım 2: Profil tamamlama kontrolü
+            if (profileData.has_cv || profileData.has_profile_data) {
                 steps[1].classList.add('completed');
-                steps[1].classList.remove('active');
-                steps[2].classList.add('active');
+                
+                // Adım 3: Hedef belirleme
+                if (profileData.has_targets) {
+                    steps[2].classList.add('completed');
+                    steps[3].classList.add('active'); // AI Koç aktif
+                } else {
+                    steps[2].classList.add('active'); // Hedef belirleme aktif
+                }
+            } else {
+                // Profil henüz başlanmamışsa step 2'yi aktif yap
+                steps[1].classList.add('active');
             }
-            
-            // Diğer adımlar henüz aktif değil
         }
         
         // Profil durumu kartını kapat
@@ -322,9 +516,111 @@
             }, 1000);
         }
         
-        function manageGoals() {
-            toast.show('Hedef yönetimi sayfası yakında kullanıma sunulacak!', 'info');
+        // Hedef belirleme formunu göster
+        function showTargetForm() {
+            document.getElementById('targetFormCard').classList.remove('hidden');
+            resetForm();
         }
+        
+        // Hedef belirleme formunu gizle
+        function hideTargetForm() {
+            document.getElementById('targetFormCard').classList.add('hidden');
+            resetForm();
+        }
+        
+        // Şirket seçimi
+        function selectCompany(companyName) {
+            // Önceki seçimi kaldır
+            document.querySelectorAll('.company-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Yeni seçimi işaretle
+            event.currentTarget.classList.add('selected');
+            
+            // Form alanını doldur
+            document.getElementById('targetCompany').value = companyName;
+            document.getElementById('targetCompany').readOnly = true;
+            
+            // Pozisyon alanına odaklan
+            document.getElementById('targetRole').focus();
+        }
+        
+        // Özel şirket seçimi
+        function selectCustomCompany() {
+            // Önceki seçimi kaldır
+            document.querySelectorAll('.company-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Custom kartı seç
+            event.currentTarget.classList.add('selected');
+            
+            // Form alanını editlenebilir yap
+            const companyInput = document.getElementById('targetCompany');
+            companyInput.value = '';
+            companyInput.readOnly = false;
+            companyInput.placeholder = 'Şirket adını yazın...';
+            companyInput.focus();
+        }
+        
+        // Formu sıfırla
+        function resetForm() {
+            document.querySelectorAll('.company-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            const companyInput = document.getElementById('targetCompany');
+            companyInput.value = '';
+            companyInput.readOnly = true;
+            companyInput.placeholder = 'Yukarıdan bir şirket seçin veya yazın...';
+            
+            document.getElementById('targetRole').value = '';
+        }
+        
+        // Hedef formu submit
+        document.getElementById('targetForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const company = document.getElementById('targetCompany').value.trim();
+            const role = document.getElementById('targetRole').value.trim();
+            
+            if (!company || !role) {
+                toast.show('Lütfen şirket ve pozisyon bilgilerini doldurun', 'warning');
+                return;
+            }
+            
+            const targetData = { company, role };
+            
+            try {
+                const token = localStorage.getItem('access_token');
+                const response = await fetch('/api/v1/targets', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(targetData)
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    toast.show(`🎯 Hedef başarıyla eklendi: ${data.company} - ${data.role}`, 'success');
+                    hideTargetForm();
+                    
+                    // Sayfa durumunu yenile
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    const error = await response.json();
+                    toast.show(error.detail || 'Hedef ekleme başarısız', 'error');
+                }
+            } catch (error) {
+                console.error('Hedef ekleme hatası:', error);
+                toast.show('Bağlantı hatası oluştu', 'error');
+            }
+        });
         
         function viewProgress() {
             toast.show('İlerleme raporu yakında kullanıma sunulacak!', 'info');

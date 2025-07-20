@@ -117,13 +117,21 @@ async def upload_cv(
             content = await cv_file.read()
             buffer.write(content)
         
-        # Kullanıcı bilgilerini güncelle
+        # Kullanıcı bilgilerini güncelle - CV yüklendi ama profil henüz tamamlanmadı
         current_user.cv_file_path = file_path
-        current_user.profile_complete = True
+        
+        # CV'den çıkarılan temel bilgileri ekle (geliştirilebilir)
+        if not current_user.full_name:
+            # CV dosya adından isim çıkarmaya çalış (basit yaklaşım)
+            base_name = os.path.splitext(cv_file.filename)[0]
+            # Dosya adından temizleme yaparak ismi al
+            clean_name = base_name.replace('_', ' ').replace('-', ' ').title()
+            if clean_name and len(clean_name) > 2:
+                current_user.full_name = clean_name
         
         db.commit()
         
-        return {"message": "CV başarıyla yüklendi ve profil tamamlandı!"}
+        return {"message": "CV başarıyla yüklendi! Şimdi hedef şirket ve pozisyonunuzu belirleyin."}
         
     except Exception as e:
         db.rollback()
@@ -133,17 +141,57 @@ async def upload_cv(
         )
 
 @router.get("/check-complete")
-def check_profile_complete(current_user: User = Depends(get_current_user)):
+def check_profile_complete(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     """
     Profil tamamlama durumunu kontrol eder
     """
+    # CV kontrolü
+    has_cv = current_user.cv_file_path is not None and current_user.cv_file_path != ""
+    
+    # Profil bilgileri kontrolü
+    has_profile_data = all([
+        current_user.full_name,
+        current_user.profession,
+        current_user.experience_level,
+        current_user.career_goals
+    ])
+    
+    # Hedef kontrolü - kullanıcının en az bir hedefi var mı?
+    from app.models import Target
+    has_targets = db.query(Target).filter(Target.user_id == current_user.id).count() > 0
+    
+    # Profil tamamlama yüzdesi hesaplama
+    completed_steps = 0
+    total_steps = 3
+    
+    if has_cv or has_profile_data:
+        completed_steps += 1  # Profil bilgileri/CV
+    if has_targets:
+        completed_steps += 1  # Hedefler
+    if has_cv and has_profile_data and has_targets:
+        completed_steps = 3   # Hepsi tamamlanmış
+    
+    completion_percentage = round((completed_steps / total_steps) * 100)
+    
+    # Profil tam tamamlanma kriteri: CV VEYA profil bilgileri + en az bir hedef
+    profile_complete = (has_cv or has_profile_data) and has_targets
+    
     return {
-        "profile_complete": current_user.profile_complete,
-        "has_cv": current_user.cv_file_path is not None,
-        "has_profile_data": all([
-            current_user.full_name,
-            current_user.profession,
-            current_user.experience_level,
-            current_user.career_goals
-        ])
-    } 
+        "profile_complete": profile_complete,
+        "has_cv": has_cv,
+        "has_profile_data": has_profile_data,
+        "has_targets": has_targets,
+        "completion_percentage": completion_percentage,
+        "targets_count": db.query(Target).filter(Target.user_id == current_user.id).count(),
+        "cv_filename": os.path.basename(current_user.cv_file_path) if has_cv else None,
+        "next_step": _get_next_step(has_cv, has_profile_data, has_targets)
+    }
+
+def _get_next_step(has_cv: bool, has_profile_data: bool, has_targets: bool) -> str:
+    """Kullanıcının bir sonraki adımını belirler"""
+    if not (has_cv or has_profile_data):
+        return "upload_cv_or_complete_profile"
+    elif not has_targets:
+        return "set_targets"
+    else:
+        return "completed" 

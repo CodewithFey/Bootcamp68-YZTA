@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil - Kariyer Koçu</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css?v=2024012001">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="profile-page">
     <!-- Navigation -->
     <div class="nav-header">
-        <div class="nav-brand">🎯 Kariyer Koçu</div>
+        <div class="nav-brand">
+            <i class="fas fa-chart-line"></i>
+            Kariyer Koçu
+        </div>
         <div class="nav-menu">
             <a href="/" class="nav-link">Ana Sayfa</a>
             <a href="/templates/dashboard.html" class="nav-link">Dashboard</a>
@@ -34,7 +37,7 @@
                 <button class="btn btn-primary" onclick="enableEditMode()">
                     <i class="fas fa-edit"></i> Profili Düzenle
                 </button>
-                <button class="btn-secondary" onclick="goToDashboard()">
+                <button class="btn btn-secondary" onclick="goToDashboard()">
                     <i class="fas fa-arrow-left"></i> Dashboard'a Dön
                 </button>
             </div>
@@ -136,7 +139,7 @@
         <!-- Profil Düzenleme Modu -->
         <div id="profileEditMode" class="hidden">
             <div class="profile-actions">
-                <button class="btn-back" onclick="disableEditMode()">
+                <button class="btn btn-secondary" onclick="disableEditMode()">
                     <i class="fas fa-times"></i> Düzenlemeyi İptal
                 </button>
             </div>
@@ -630,7 +633,7 @@
                 if (response.ok) {
                     toast.show(data.message, 'success');
                     setTimeout(() => {
-                        window.location.href = '/static/dashboard.html';
+                        window.location.href = '/templates/dashboard.html';
                     }, 2000);
                 } else {
                     toast.show(data.detail || 'CV yükleme başarısız', 'error');
