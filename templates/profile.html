@@ -618,6 +618,12 @@
             const formData = new FormData();
             formData.append('cv_file', fileInput.files[0]);
             
+            // Yükleme sırasında loading durumu göster
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> CV İşleniyor...';
+            submitButton.disabled = true;
+            
             try {
                 const token = localStorage.getItem('access_token');
                 const response = await fetch('/api/v1/profile/upload-cv', {
@@ -632,14 +638,24 @@
                 
                 if (response.ok) {
                     toast.show(data.message, 'success');
-                    setTimeout(() => {
-                        window.location.href = '/templates/dashboard.html';
-                    }, 2000);
+                    
+                    // Profil bilgilerini yeniden yükle ve görüntüleme moduna geç
+                    await loadProfile();
+                    if (currentProfile) {
+                        // 2 saniye sonra dashboard'a yönlendir
+                        setTimeout(() => {
+                            window.location.href = '/templates/dashboard.html';
+                        }, 3000);
+                    }
                 } else {
                     toast.show(data.detail || 'CV yükleme başarısız', 'error');
                 }
             } catch (error) {
                 toast.show('Bağlantı hatası oluştu', 'error');
+            } finally {
+                // Button'u eski haline getir
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
             }
         });
         

@@ -4,6 +4,7 @@ from app.core.database import get_db
 from app.models import User
 from app.schemas import UserProfileOut, UserProfileUpdate, Message, ProfileComplete
 from app.core.auth import get_current_user
+from app.services.cv_parser import parse_cv_for_profile
 import os
 from typing import Optional
 
@@ -84,7 +85,7 @@ async def upload_cv(
     current_user: User = Depends(get_current_user)
 ):
     """
-    CV dosyası yükler ve profili tamamlar
+    CV dosyası yükler, işler ve profili otomatik olarak tamamlar
     """
     try:
         # Dosya formatını kontrol et
@@ -117,24 +118,56 @@ async def upload_cv(
             content = await cv_file.read()
             buffer.write(content)
         
-        # Kullanıcı bilgilerini güncelle - CV yüklendi ama profil henüz tamamlanmadı
+        # CV dosya yolunu kaydet
         current_user.cv_file_path = file_path
         
-        # CV'den çıkarılan temel bilgileri ekle (geliştirilebilir)
-        if not current_user.full_name:
-            # CV dosya adından isim çıkarmaya çalış (basit yaklaşım)
-            base_name = os.path.splitext(cv_file.filename)[0]
-            # Dosya adından temizleme yaparak ismi al
-            clean_name = base_name.replace('_', ' ').replace('-', ' ').title()
-            if clean_name and len(clean_name) > 2:
-                current_user.full_name = clean_name
+        # CV'yi işle ve profil bilgilerini çıkart (sadece PDF destekleniyor şimdilik)
+        profile_updates = {}
+        if file_extension == '.pdf':
+            try:
+                cv_data = parse_cv_for_profile(file_path)
+                
+                # CV'den çıkarılan bilgileri kullanıcı profiline uygula
+                # Sadece boş olan alanları doldur
+                if cv_data.get('full_name') and not current_user.full_name:
+                    profile_updates['full_name'] = cv_data['full_name']
+                    current_user.full_name = cv_data['full_name']
+                
+                if cv_data.get('profession') and not current_user.profession:
+                    profile_updates['profession'] = cv_data['profession']
+                    current_user.profession = cv_data['profession']
+                
+                if cv_data.get('experience_level') and not current_user.experience_level:
+                    profile_updates['experience_level'] = cv_data['experience_level']
+                    current_user.experience_level = cv_data['experience_level']
+                
+                if cv_data.get('education_level') and not current_user.education_level:
+                    profile_updates['education_level'] = cv_data['education_level']
+                    current_user.education_level = cv_data['education_level']
+                
+                if cv_data.get('skills') and not current_user.skills:
+                    profile_updates['skills'] = cv_data['skills']
+                    current_user.skills = cv_data['skills']
+                
+            except Exception as e:
+                print(f"CV işleme hatası: {e}")
+                # CV işleme başarısız olsa bile dosya yükleme devam etsin
         
         db.commit()
         
-        return {"message": "CV başarıyla yüklendi! Şimdi hedef şirket ve pozisyonunuzu belirleyin."}
+        # Sonuç mesajını oluştur
+        if profile_updates:
+            updated_fields = list(profile_updates.keys())
+            message = f"CV başarıyla yüklendi ve şu bilgiler otomatik olarak dolduruldu: {', '.join(updated_fields)}. "
+            message += "Eksik bilgileri tamamlamak için profil düzenleme sayfasını kullanabilirsiniz."
+        else:
+            message = "CV başarıyla yüklendi! Profil bilgilerinizi kontrol edip eksik olanları tamamlayın."
+        
+        return {"message": message}
         
     except Exception as e:
         db.rollback()
+        print(f"CV yükleme hatası: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="CV yükleme sırasında bir hata oluştu"

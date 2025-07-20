@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Kariyer Koçu</title>
-    <link rel="stylesheet" href="/static/css/style.css?v=2024012003">
+    <link rel="stylesheet" href="/static/css/style.css?v=2024012005">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -262,7 +262,7 @@
                             <button type="button" class="btn btn-secondary" onclick="resetForm()">
                                 <i class="fas fa-undo"></i> <span>Sıfırla</span>
                             </button>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" id="submitTargetBtn">
                                 <i class="fas fa-save"></i> <span>Hedefi Kaydet</span>
                             </button>
                         </div>
@@ -314,8 +314,79 @@
     </div>
     
     <script>
+        // Toast Notification Class (önce tanımlanmalı)
+        class ToastNotification {
+            constructor() {
+                this.toastElement = document.getElementById('toast');
+                this.toastIcon = this.toastElement.querySelector('.toast-icon');
+                this.toastMessage = this.toastElement.querySelector('.toast-message');
+                this.hideTimeout = null;
+            }
+
+            show(message, type = 'success', duration = 3000) {
+                this.hide();
+                
+                this.toastMessage.textContent = message;
+                this.toastElement.className = `toast ${type}`;
+                
+                const icons = {
+                    success: 'fas fa-check-circle',
+                    error: 'fas fa-exclamation-circle',
+                    warning: 'fas fa-exclamation-triangle',
+                    info: 'fas fa-info-circle'
+                };
+                this.toastIcon.className = `toast-icon ${icons[type] || icons.success}`;
+                
+                this.toastElement.classList.add('show');
+                
+                this.hideTimeout = setTimeout(() => {
+                    this.hide();
+                }, duration);
+                
+                this.toastElement.onclick = () => this.hide();
+            }
+
+            hide() {
+                if (this.hideTimeout) {
+                    clearTimeout(this.hideTimeout);
+                    this.hideTimeout = null;
+                }
+                this.toastElement.classList.remove('show');
+                this.toastElement.onclick = null;
+            }
+        }
+
+        // Toast instance'ını oluştur
+        let toast;
+        
+        // Profil durumunu kontrol etme fonksiyonu
+        async function checkProfileStatus() {
+            const token = localStorage.getItem('access_token');
+            try {
+                const profileResponse = await fetch('/api/v1/profile/check-complete', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const profileData = await profileResponse.json();
+                console.log('Profil durumu:', profileData);
+                
+                if (profileResponse.ok) {
+                    updateProfileStatus(profileData);
+                    updateOnboardingGuide(profileData);
+                }
+            } catch (error) {
+                console.error('Profil durumu kontrol hatası:', error);
+            }
+        }
+
         // Auth check ve profil kontrol
         document.addEventListener('DOMContentLoaded', async () => {
+            // Toast instance'ını oluştur
+            toast = new ToastNotification();
+            console.log('Toast oluşturuldu');
+            
             const token = localStorage.getItem('access_token');
             if (!token) {
                 window.location.href = '/templates/login.html';
@@ -336,18 +407,7 @@
                     document.getElementById('welcomeTitle').textContent = `Hoş Geldiniz, ${userData.full_name || userData.username}!`;
                     
                     // Profil tamamlama durumunu kontrol et
-                    const profileResponse = await fetch('/api/v1/profile/check-complete', {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    });
-                    
-                    const profileData = await profileResponse.json();
-                    
-                    if (profileResponse.ok) {
-                        updateProfileStatus(profileData);
-                        updateOnboardingGuide(profileData);
-                    }
+                    await checkProfileStatus();
                 } else {
                     document.getElementById('userInfo').textContent = 'Kullanıcı';
                 }
@@ -356,8 +416,6 @@
                 document.getElementById('userInfo').textContent = 'Kullanıcı';
             }
         });
-        
-        const toast = new ToastNotification();
         
         // Profil durumunu güncelle
         function updateProfileStatus(profileData) {
@@ -510,7 +568,9 @@
         
         function logout() {
             localStorage.removeItem('access_token');
-            toast.show('Çıkış yapılıyor...', 'success');
+            if (toast) {
+                toast.show('Çıkış yapılıyor...', 'success');
+            }
             setTimeout(() => {
                 window.location.href = '/templates/login.html';
             }, 1000);
@@ -578,22 +638,34 @@
             document.getElementById('targetRole').value = '';
         }
         
-        // Hedef formu submit
-        document.getElementById('targetForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+        // Hedef submit fonksiyonu (ayrı olarak)
+        async function submitTarget() {
+            console.log('submitTarget fonksiyonu çağrıldı');
             
             const company = document.getElementById('targetCompany').value.trim();
             const role = document.getElementById('targetRole').value.trim();
             
+            console.log('Form verileri:', { company, role });
+            
             if (!company || !role) {
-                toast.show('Lütfen şirket ve pozisyon bilgilerini doldurun', 'warning');
+                if (toast) {
+                    toast.show('Lütfen şirket ve pozisyon bilgilerini doldurun', 'warning');
+                }
                 return;
             }
             
             const targetData = { company, role };
             
+            // Butonu disable et
+            const submitBtn = document.getElementById('submitTargetBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Kaydediliyor...</span>';
+            
             try {
                 const token = localStorage.getItem('access_token');
+                console.log('API isteği gönderiliyor:', '/api/v1/targets');
+                console.log('Token mevcut:', !!token);
+                
                 const response = await fetch('/api/v1/targets', {
                     method: 'POST',
                     headers: {
@@ -603,72 +675,71 @@
                     body: JSON.stringify(targetData)
                 });
                 
+                console.log('API yanıtı status:', response.status);
+                
                 if (response.ok) {
                     const data = await response.json();
-                    toast.show(`🎯 Hedef başarıyla eklendi: ${data.company} - ${data.role}`, 'success');
+                    console.log('Başarılı yanıt:', data);
+                    if (toast) {
+                        toast.show(`🎯 Hedef başarıyla eklendi: ${data.company} - ${data.role}`, 'success');
+                    }
                     hideTargetForm();
                     
-                    // Sayfa durumunu yenile
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
+                    // Profil durumunu yeniden kontrol et
+                    setTimeout(async () => {
+                        await checkProfileStatus();
+                    }, 1000);
                 } else {
-                    const error = await response.json();
-                    toast.show(error.detail || 'Hedef ekleme başarısız', 'error');
+                    const errorText = await response.text();
+                    console.error('API hatası:', response.status, errorText);
+                    if (toast) {
+                        try {
+                            const error = JSON.parse(errorText);
+                            toast.show(error.detail || 'Hedef ekleme başarısız', 'error');
+                        } catch {
+                            toast.show(`Hedef ekleme başarısız (${response.status})`, 'error');
+                        }
+                    }
                 }
             } catch (error) {
                 console.error('Hedef ekleme hatası:', error);
-                toast.show('Bağlantı hatası oluştu', 'error');
+                if (toast) {
+                    toast.show('Bağlantı hatası oluştu', 'error');
+                }
+            } finally {
+                // Butonu aktif et
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-save"></i> <span>Hedefi Kaydet</span>';
+            }
+        }
+
+        // Form event listener'ını sayfa yüklendikten sonra ekle
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM yüklendi, form listener ekleniyor');
+            
+            const targetForm = document.getElementById('targetForm');
+            if (targetForm) {
+                console.log('Target form bulundu');
+                targetForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Form submit event yakalandı');
+                    await submitTarget();
+                });
+            } else {
+                console.log('Target form bulunamadı!');
             }
         });
         
         function viewProgress() {
-            toast.show('İlerleme raporu yakında kullanıma sunulacak!', 'info');
+            if (toast) {
+                toast.show('İlerleme raporu yakında kullanıma sunulacak!', 'info');
+            }
         }
         
         function chatWithAI() {
-            toast.show('AI Kariyer Koçu yakında kullanıma sunulacak!', 'info');
-        }
-        
-        // Toast Notification Class (simplified version)
-        class ToastNotification {
-            constructor() {
-                this.toastElement = document.getElementById('toast');
-                this.toastIcon = this.toastElement.querySelector('.toast-icon');
-                this.toastMessage = this.toastElement.querySelector('.toast-message');
-                this.hideTimeout = null;
-            }
-
-            show(message, type = 'success', duration = 3000) {
-                this.hide();
-                
-                this.toastMessage.textContent = message;
-                this.toastElement.className = `toast ${type}`;
-                
-                const icons = {
-                    success: 'fas fa-check-circle',
-                    error: 'fas fa-exclamation-circle',
-                    warning: 'fas fa-exclamation-triangle',
-                    info: 'fas fa-info-circle'
-                };
-                this.toastIcon.className = `toast-icon ${icons[type] || icons.success}`;
-                
-                this.toastElement.classList.add('show');
-                
-                this.hideTimeout = setTimeout(() => {
-                    this.hide();
-                }, duration);
-                
-                this.toastElement.onclick = () => this.hide();
-            }
-
-            hide() {
-                if (this.hideTimeout) {
-                    clearTimeout(this.hideTimeout);
-                    this.hideTimeout = null;
-                }
-                this.toastElement.classList.remove('show');
-                this.toastElement.onclick = null;
+            if (toast) {
+                toast.show('AI Kariyer Koçu yakında kullanıma sunulacak!', 'info');
             }
         }
     </script>
