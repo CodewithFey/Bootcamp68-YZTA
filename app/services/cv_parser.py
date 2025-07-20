@@ -1,8 +1,8 @@
 import re
 import spacy
 from pdfminer.high_level import extract_text
-from missing_skills import find_missing_skills
-import job_roles
+from app.services.missing_skills import find_missing_skills
+from app.services import job_roles
 
 # İngilizce model yüklü olduğunu varsayıyorum
 nlp = spacy.load("en_core_web_sm")

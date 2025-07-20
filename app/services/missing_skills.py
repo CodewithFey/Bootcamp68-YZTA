@@ -1,4 +1,4 @@
-from job_roles import job_requirements
+from app.services.job_roles import job_requirements
 
 
 

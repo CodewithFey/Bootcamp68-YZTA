@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Kariyer Koçu</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <!-- Navigation -->
+    <div class="nav-header">
+        <div class="nav-brand">🎯 Kariyer Koçu</div>
+        <div class="nav-menu">
+            <a href="/" class="nav-link">Ana Sayfa</a>
+            <a href="/templates/dashboard.html" class="nav-link">Dashboard</a>
+            <a href="/templates/profile.html" class="nav-link">Profil</a>
+            <div class="user-info">
+                <span id="userInfo">Yükleniyor...</span>
+                <a href="#" class="nav-link" onclick="logout()">Çıkış</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Profil Durumu Göstergesi -->
+        <div id="profileStatus" class="profile-status hidden">
+            <div class="status-content">
+                <div class="status-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="status-text">
+                    <h3>Profilinizi Tamamlayın</h3>
+                    <p>Daha iyi kariyer önerileri almak için profilinizi tamamlayın.</p>
+                </div>
+                <div class="status-action">
+                    <a href="/templates/profile.html?mode=complete" class="btn btn-primary">
+                        <i class="fas fa-user-edit"></i> Profil Tamamla
+                    </a>
+                </div>
+            </div>
+            <button class="status-close" onclick="hideProfileStatus()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="dashboard-header">
+            <div class="welcome-section">
+                <h1 id="welcomeTitle">Hoş Geldiniz!</h1>
+                <p id="welcomeDescription">Kariyer yolculuğunuza devam etmeye hazır mısınız?</p>
+                <div id="profileProgress" class="progress-indicator hidden">
+                    <span class="progress-label">Profil Tamamlama:</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0%</span>
+                </div>
+            </div>
+            <div class="user-actions">
+                <button class="btn-secondary" onclick="viewProfile()">
+                    <i class="fas fa-user"></i> Profil
+                </button>
+                <button class="btn-secondary" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Çıkış
+                </button>
+            </div>
+        </div>
+        
+        <!-- Başlangıç Rehberi (Yeni Kullanıcılar İçin) -->
+        <div id="onboardingGuide" class="onboarding-guide hidden">
+            <div class="guide-header">
+                <h2><i class="fas fa-rocket"></i> Kariyer Yolculuğunuza Başlayın!</h2>
+                <p>Size özel hazırlanmış bu adımları takip ederek platform özelliklerini keşfedin.</p>
+            </div>
+            <div class="guide-steps">
+                <div class="guide-step completed" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Hesap Oluşturuldu</h3>
+                        <p>Platforma başarıyla kaydoldunuz!</p>
+                    </div>
+                    <div class="step-icon"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="guide-step active" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Profil Tamamlama</h3>
+                        <p>Kişisel bilgilerinizi ve kariyer hedeflerinizi ekleyin.</p>
+                        <a href="/templates/profile.html?mode=complete" class="step-action">Profili Tamamla</a>
+                    </div>
+                    <div class="step-icon"><i class="fas fa-user-edit"></i></div>
+                </div>
+                <div class="guide-step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Hedef Belirleme</h3>
+                        <p>Kariyer hedeflerinizi detaylandırın ve takip edin.</p>
+                    </div>
+                    <div class="step-icon"><i class="fas fa-target"></i></div>
+                </div>
+                <div class="guide-step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>AI Koç ile Tanışma</h3>
+                        <p>Yapay zeka destekli kariyer koçunuzdan öneriler alın.</p>
+                    </div>
+                    <div class="step-icon"><i class="fas fa-robot"></i></div>
+                </div>
+            </div>
+            <button class="guide-close" onclick="hideOnboardingGuide()">
+                <i class="fas fa-times"></i> Rehberi Kapat
+            </button>
+        </div>
+        
+        <div class="dashboard-content">
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-target"></i>
+                </div>
+                <h3>Kariyer Hedefleri</h3>
+                <p>Kariyerinizde ulaşmak istediğiniz hedefleri belirleyin ve takip edin.</p>
+                <button class="btn btn-primary" onclick="manageGoals()">
+                    Hedefleri Yönet
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>İlerleme Raporu</h3>
+                <p>Kariyer gelişiminizi analiz edin ve hangi alanlarda iyileştirme yapabileceğinizi öğrenin.</p>
+                <button class="btn btn-primary" onclick="viewProgress()">
+                    Raporu Görüntüle
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>AI Kariyer Koçu</h3>
+                <p>Yapay zeka destekli kariyer koçunuzla kişiselleştirilmiş tavsiyeler alın.</p>
+                <button class="btn btn-primary" onclick="chatWithAI()">
+                    Koçla Konuş
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="toast-icon"></i>
+            <span class="toast-message"></span>
+        </div>
+    </div>
+    
+    <script>
+        // Auth check ve profil kontrol
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                window.location.href = '/templates/login.html';
+                return;
+            }
+            
+            try {
+                // Kullanıcı bilgilerini al
+                const userResponse = await fetch('/api/v1/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (userResponse.ok) {
+                    const userData = await userResponse.json();
+                    document.getElementById('userInfo').textContent = userData.full_name || userData.username;
+                    document.getElementById('welcomeTitle').textContent = `Hoş Geldiniz, ${userData.full_name || userData.username}!`;
+                    
+                    // Profil tamamlama durumunu kontrol et
+                    const profileResponse = await fetch('/api/v1/profile/check-complete', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    const profileData = await profileResponse.json();
+                    
+                    if (profileResponse.ok) {
+                        updateProfileStatus(profileData);
+                        updateOnboardingGuide(profileData);
+                    }
+                } else {
+                    document.getElementById('userInfo').textContent = 'Kullanıcı';
+                }
+            } catch (error) {
+                console.error('Kullanıcı bilgileri yükleme hatası:', error);
+                document.getElementById('userInfo').textContent = 'Kullanıcı';
+            }
+        });
+        
+        const toast = new ToastNotification();
+        
+        // Profil durumunu güncelle
+        function updateProfileStatus(profileData) {
+            const profileStatus = document.getElementById('profileStatus');
+            const profileProgress = document.getElementById('profileProgress');
+            
+            if (!profileData.profile_complete) {
+                // Profil tamamlanmamış
+                profileStatus.classList.remove('hidden');
+                profileProgress.classList.remove('hidden');
+                
+                // İlerleme yüzdesini hesapla
+                let completionPercent = 0;
+                const fields = ['has_profile_data', 'has_cv'];
+                const completedFields = fields.filter(field => profileData[field]).length;
+                completionPercent = Math.round((completedFields / fields.length) * 100);
+                
+                // İlerleme çubuğunu güncelle
+                const progressFill = document.getElementById('progressFill');
+                const progressText = document.getElementById('progressText');
+                progressFill.style.width = completionPercent + '%';
+                progressText.textContent = completionPercent + '%';
+                
+                // Uyarı göster
+                if (completionPercent < 50) {
+                    toast.show('Profilinizi tamamlayarak daha iyi öneriler alın!', 'warning', 5000);
+                }
+            } else {
+                // Profil tamamlanmış
+                profileStatus.classList.add('hidden');
+                profileProgress.classList.add('hidden');
+                
+                // Başarı mesajı
+                document.getElementById('welcomeDescription').textContent = 
+                    'Profiliniz tamamlanmış! Şimdi kariyer hedefleriniz üzerinde çalışabilirsiniz.';
+            }
+        }
+        
+        // Onboarding rehberini güncelle
+        function updateOnboardingGuide(profileData) {
+            const onboardingGuide = document.getElementById('onboardingGuide');
+            
+            // Yeni kullanıcı kontrolü (profil tamamlanmamış)
+            if (!profileData.profile_complete) {
+                // LocalStorage'dan rehber durumunu kontrol et
+                const guideHidden = localStorage.getItem('onboarding_hidden');
+                
+                if (!guideHidden) {
+                    onboardingGuide.classList.remove('hidden');
+                    
+                    // Adım durumlarını güncelle
+                    updateGuideSteps(profileData);
+                }
+            }
+        }
+        
+        // Rehber adımlarını güncelle
+        function updateGuideSteps(profileData) {
+            const steps = document.querySelectorAll('.guide-step');
+            
+            // Adım 1: Hesap oluşturuldu (her zaman tamamlanmış)
+            steps[0].classList.add('completed');
+            steps[0].classList.remove('active');
+            
+            // Adım 2: Profil tamamlama
+            if (profileData.has_profile_data) {
+                steps[1].classList.add('completed');
+                steps[1].classList.remove('active');
+                steps[2].classList.add('active');
+            }
+            
+            // Diğer adımlar henüz aktif değil
+        }
+        
+        // Profil durumu kartını kapat
+        function hideProfileStatus() {
+            document.getElementById('profileStatus').classList.add('hidden');
+        }
+        
+        // Onboarding rehberini kapat
+        function hideOnboardingGuide() {
+            document.getElementById('onboardingGuide').classList.add('hidden');
+            localStorage.setItem('onboarding_hidden', 'true');
+        }
+        
+        async function viewProfile() {
+            const token = localStorage.getItem('access_token');
+            try {
+                const response = await fetch('/api/v1/profile/check-complete', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    if (data.profile_complete) {
+                        // Profil tamamlanmış, profili görüntüle
+                        window.location.href = '/templates/profile.html?mode=view';
+                    } else {
+                        // Profil tamamlanmamış, profil tamamlama sayfasına yönlendir
+                        window.location.href = '/templates/profile.html?mode=complete';
+                    }
+                } else {
+                    window.location.href = '/templates/profile.html?mode=complete';
+                }
+            } catch (error) {
+                console.error('Profil kontrol hatası:', error);
+                window.location.href = '/templates/profile.html?mode=complete';
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('access_token');
+            toast.show('Çıkış yapılıyor...', 'success');
+            setTimeout(() => {
+                window.location.href = '/templates/login.html';
+            }, 1000);
+        }
+        
+        function manageGoals() {
+            toast.show('Hedef yönetimi sayfası yakında kullanıma sunulacak!', 'info');
+        }
+        
+        function viewProgress() {
+            toast.show('İlerleme raporu yakında kullanıma sunulacak!', 'info');
+        }
+        
+        function chatWithAI() {
+            toast.show('AI Kariyer Koçu yakında kullanıma sunulacak!', 'info');
+        }
+        
+        // Toast Notification Class (simplified version)
+        class ToastNotification {
+            constructor() {
+                this.toastElement = document.getElementById('toast');
+                this.toastIcon = this.toastElement.querySelector('.toast-icon');
+                this.toastMessage = this.toastElement.querySelector('.toast-message');
+                this.hideTimeout = null;
+            }
+
+            show(message, type = 'success', duration = 3000) {
+                this.hide();
+                
+                this.toastMessage.textContent = message;
+                this.toastElement.className = `toast ${type}`;
+                
+                const icons = {
+                    success: 'fas fa-check-circle',
+                    error: 'fas fa-exclamation-circle',
+                    warning: 'fas fa-exclamation-triangle',
+                    info: 'fas fa-info-circle'
+                };
+                this.toastIcon.className = `toast-icon ${icons[type] || icons.success}`;
+                
+                this.toastElement.classList.add('show');
+                
+                this.hideTimeout = setTimeout(() => {
+                    this.hide();
+                }, duration);
+                
+                this.toastElement.onclick = () => this.hide();
+            }
+
+            hide() {
+                if (this.hideTimeout) {
+                    clearTimeout(this.hideTimeout);
+                    this.hideTimeout = null;
+                }
+                this.toastElement.classList.remove('show');
+                this.toastElement.onclick = null;
+            }
+        }
+    </script>
+</body>
+</html> 

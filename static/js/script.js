@@ -1,11 +1,11 @@
 // Uygulama Yapılandırması
 const CONFIG = {
-    API_BASE_URL: 'http://localhost:8000', // Backend API URL'ini buraya yazın
+    API_BASE_URL: window.location.origin, // Dinamik olarak mevcut origin kullan
     TOKEN_KEY: 'access_token',
     ENDPOINTS: {
-        LOGIN: '/api/login',
-        REGISTER: '/api/register',
-        REFRESH: '/api/token/refresh'
+        LOGIN: '/api/v1/login',
+        REGISTER: '/api/v1/register',
+        REFRESH: '/api/v1/token/refresh'
     }
 };
 
@@ -69,7 +69,7 @@ class FormValidator {
             },
             email: {
                 required: true,
-                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
             },
             password: {
                 required: true,
@@ -187,19 +187,32 @@ class APIClient {
             }
 
             if (!response.ok) {
+                console.error('HTTP Error:', response.status, data);
+                
                 // Validation errors için detaylı mesaj
                 if (response.status === 422 && data.detail && Array.isArray(data.detail)) {
                     const errorMessages = data.detail.map(err => 
-                        `${err.loc ? err.loc.join('.') : 'field'}: ${err.msg}`
+                        `${err.loc ? err.loc.join('.') : 'alan'}: ${err.msg}`
                     ).join(', ');
                     throw new Error(`Doğrulama hatası: ${errorMessages}`);
                 }
                 
-                throw new Error(data.detail || data.message || 'Bir hata oluştu');
+                // 400 Bad Request için özel mesaj
+                if (response.status === 400) {
+                    throw new Error(data.detail || 'Bu email veya kullanıcı adı zaten kullanımda');
+                }
+                
+                // 500 Internal Server Error için özel mesaj
+                if (response.status === 500) {
+                    throw new Error('Sunucu hatası oluştu. Lütfen daha sonra tekrar deneyin.');
+                }
+                
+                throw new Error(data.detail || data.message || `HTTP ${response.status}: Bilinmeyen hata`);
             }
 
             return data;
         } catch (error) {
+            console.error('API Request Error:', error);
             if (error.name === 'TypeError' && error.message.includes('fetch')) {
                 throw new Error('Sunucuya bağlanılamadı. Lütfen daha sonra tekrar deneyin.');
             }
@@ -381,7 +394,7 @@ class FormHandler {
             
             // Dashboard'a yönlendir, orada profil kontrolü yapılacak
             setTimeout(() => {
-                window.location.href = '/static/dashboard.html';
+                window.location.href = '/templates/dashboard.html';
             }, 1500);
             
         } catch (error) {
@@ -399,11 +412,13 @@ class FormHandler {
         const formData = new FormData(form);
         
         const userData = {
-            username: formData.get('username') || document.getElementById('username').value,
-            email: formData.get('email') || document.getElementById('email').value,
-            password: formData.get('password') || document.getElementById('password').value,
+            username: document.getElementById('username').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            password: document.getElementById('password').value,
             confirmPassword: document.getElementById('confirmPassword').value
         };
+        
+        console.log('Register form data:', userData);
 
         // Validation
         const validationResult = this.validator.validateForm(userData);
@@ -428,13 +443,15 @@ class FormHandler {
                 career_goals: null
             };
             
+            console.log('Sending register data to API:', completeData);
             const response = await this.apiClient.register(completeData);
+            console.log('Register response:', response);
             
             this.toast.show('Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...', 'success');
             
             // Login sayfasına yönlendir
             setTimeout(() => {
-                window.location.href = '/static/login.html';
+                window.location.href = '/templates/login.html';
             }, 1500);
             
         } catch (error) {
@@ -468,7 +485,7 @@ class AuthManager {
 
     logout() {
         localStorage.removeItem(CONFIG.TOKEN_KEY);
-        window.location.href = '/static/login.html';
+        window.location.href = '/templates/login.html';
     }
 
     getToken() {

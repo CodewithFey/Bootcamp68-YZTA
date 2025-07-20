@@ -4,9 +4,9 @@ from jose import JWTError, jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
-from database import get_db
-from models import User
-import schemas
+from app.core.database import get_db
+from app.models import User
+from app import schemas
 import os
 
 # JWT ayarları

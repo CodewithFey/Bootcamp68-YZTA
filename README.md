@@ -15,11 +15,11 @@
 | Elif Feyza Güneş | Scrum Master      |
 
 ## Ürün Açıklaması
-PathMentor, kullanıcıların CV’lerini yükleyerek kariyer hedeflerine göre özelleştirilmiş gelişim planları ve görev önerileri alabilecekleri AI destekli bir kariyer koçluğu platformudur. Sistem, CV analizinden öğrenme planlamasına kadar tüm süreci otomatikleştirir ve kullanıcıya sürekli geri bildirim sunar.
+PathMentor, kullanıcıların CV'lerini yükleyerek kariyer hedeflerine göre özelleştirilmiş gelişim planları ve görev önerileri alabilecekleri AI destekli bir kariyer koçluğu platformudur. Sistem, CV analizinden öğrenme planlamasına kadar tüm süreci otomatikleştirir ve kullanıcıya sürekli geri bildirim sunar.
 
 ## Ürün Özellikleri
 
-- **AI Destekli CV Analizi:** PDF CV’leri okuyarak deneyim, beceri ve eğitim verilerini otomatik çıkarır.
+- **AI Destekli CV Analizi:** PDF CV'leri okuyarak deneyim, beceri ve eğitim verilerini otomatik çıkarır.
 - **Öğrenme Planı Oluşturma:** Kullanıcının hedef pozisyonuna uygun mikro hedefler ve görev listeleri önerir.
 - **Mülakat Simülasyonu:** AI destekli mülakat soruları ve cevap analizi sağlar.
 - **Geri Bildirim Üretimi:** Kullanıcıya gelişim alanları hakkında öneriler sunar.
@@ -77,7 +77,7 @@ PathMentor, kullanıcıların CV’lerini yükleyerek kariyer hedeflerine göre 
 
 # Sprint 2
 
-* Sprint 1’den kalan görevler başarıyla tamamlandı ve geliştirme sürecine ivme kazandırıldı.  
+* Sprint 1'den kalan görevler başarıyla tamamlandı ve geliştirme sürecine ivme kazandırıldı.  
 * **Sprint Notları:** İletişim ve görev takibi için WhatsApp aktif olarak kullanılmış, tüm ekip görüşmelere düzenli olarak katılım sağlamıştır.
 
 ### Sprint Board  
@@ -105,7 +105,7 @@ PathMentor, kullanıcıların CV’lerini yükleyerek kariyer hedeflerine göre 
 
 ### Sprint Retrospective
 
-- Sprint kapsamına alınan mülakat simülasyonu arayüzü ise zaman sınırlamaları nedeniyle bu sprintte geliştirme dışı bırakılmış, Sprint 3’e aktarılmıştır. Vakit kalması durumunda bu sprint içerisinde de tamamlanabilir.
+- Sprint kapsamına alınan mülakat simülasyonu arayüzü ise zaman sınırlamaları nedeniyle bu sprintte geliştirme dışı bırakılmış, Sprint 3'e aktarılmıştır. Vakit kalması durumunda bu sprint içerisinde de tamamlanabilir.
 - Bu sprintte ekip koordinasyonu daha güçlüydü, görevler daha sistematik biçimde tamamlanmaya başlandı.
 - Toplantı sıklığı artırılarak iletişim daha verimli hâle getirildi.
 - Zaman yönetimi konusunda önceki sprintlere göre daha başarılı bir süreç izlendi.
