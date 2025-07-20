@@ -46,6 +46,7 @@ PathMentor, kullanıcıların CV’lerini yükleyerek kariyer hedeflerine göre 
   
 ### Sprint Board
 ![Ekran Görüntüsü](./Ekran%20görüntüsü%202025-07-06%20205854.png)
+### Daily Scrum
 ![Ekran Görüntüsü](./Adsız%20tasarım.png)
 
 * Sprint içinde tamamlanması beklenen puan 100 olarak belirlenmiştir.
@@ -74,5 +75,40 @@ PathMentor, kullanıcıların CV’lerini yükleyerek kariyer hedeflerine göre 
 
 ---
 
+# Sprint 2
 
+* Sprint 1’den kalan görevler başarıyla tamamlandı ve geliştirme sürecine ivme kazandırıldı.  
+* **Sprint Notları:** İletişim ve görev takibi için WhatsApp aktif olarak kullanılmış, tüm ekip görüşmelere düzenli olarak katılım sağlamıştır.
+
+### Sprint Board  
+![Ekran Görüntüsü](./Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-07-20%20220428.png)
+### Toplantılar, Daily Scrum
+![Ekran Görüntüsü](./2.png)
+### Ürün Durumu
+![Ekran Görüntüsü](./3.png)
+
+* Sprint içinde tamamlanması beklenen puan 100 olarak belirlenmiştir.
+
+* **Puan Tamamlama Mantığı:** Görevler zorluk ve sürelerine göre 100 puan üzerinden dengeli biçimde puanlanmıştır. Çıkarılan görevler hariç başarıyla tamamlanmıştır.
+
+* **Daily Scrum:** İletişim için WhatsApp grubu kullanılmış, günlük değil, yoğunluk durumuna göre ihtiyaç oldukça scrum görüşmeleri gerçekleştirilmiştir, sesli toplantı sıklığı arttırılmıştır.
+
+### Sprint Review
+
+- Dashboard, Öğrenme Planı Sayfası ve AI destekli görev kartları gibi UI/UX odaklı tasarımlar tamamlandı.
+- Yapay zekâ modüllerinden embedding çıkarımı, eksik beceri analizi ve mikro hedef planlayıcı modülleri geliştirildi.
+- Kullanıcı giriş/kayıt sistemi başarıyla tamamlandı.
+- Kullanıcı verisi, hedef pozisyon ve şirket bilgileri veritabanına kaydedildi.
+- AI çıktıları ile arayüz entegrasyonları sağlandı; görev takibi ve bildirim sistemi temel seviyede aktive edildi.
+- Önceki sprintte eksik kalan işlevler başarıyla tamamlandı, takım içi görev paylaşımı daha dengeli yürütüldü.
+- Ekip üyeleri, tüm toplantılara olabildiğince katılım sağladı ve proje içi iletişimde yüksek etkileşim sağlandı.
+
+### Sprint Retrospective
+
+- Sprint kapsamına alınan mülakat simülasyonu arayüzü ise zaman sınırlamaları nedeniyle bu sprintte geliştirme dışı bırakılmış, Sprint 3’e aktarılmıştır. Vakit kalması durumunda bu sprint içerisinde de tamamlanabilir.
+- Bu sprintte ekip koordinasyonu daha güçlüydü, görevler daha sistematik biçimde tamamlanmaya başlandı.
+- Toplantı sıklığı artırılarak iletişim daha verimli hâle getirildi.
+- Zaman yönetimi konusunda önceki sprintlere göre daha başarılı bir süreç izlendi.
+- Kısıtlı zamana rağmen sprint hedeflerine ulaşmak için takım içi sorumluluk paylaşımı dengelendi.
+- Bir sonraki sprintte son özelliklerin tamamlanması ve ürünün son hâlinin hazırlanması planlanmaktadır.
 
