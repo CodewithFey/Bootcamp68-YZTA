@@ -44,10 +44,8 @@ PathMentor, kullanıcıların CV'lerini yükleyerek kariyer hedeflerine göre ö
 *  Geliştirici ekip olarak, projenin bütün temel ihtiyaçlarını karşılayabileceğimizi test ettik ve projenin bir sonuca ulaşabileceğine emin olduk.
 * **Sprint Notları:** Proje yönetimi, toplantı notları ve önemli tarihlerin hatırlatılması için Trello; fikir geliştirme, daily scrum, genel konuşmalar ve toplantılar için WhatsApp kullanılmasına karar verilmiştir.
   
-### Sprint Board
-![Ekran Görüntüsü](./static/images/Ekran_goruntusu_2025-07-06_205854.png)
-### Daily Scrum
-![Ekran Görüntüsü](./static/images/adsiz_tasarim.png)
+![Adsız Tasarım](./static/images/Adsız%20tasarım.png)
+![Ekran Görüntüsü 2025-07-06](./static/images/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-07-06%20205854.png)
 
 * Sprint içinde tamamlanması beklenen puan 100 olarak belirlenmiştir.
   
