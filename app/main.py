@@ -1,9 +1,9 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
-from database import engine, Base
-from routes import user, targets, profile
+from app.core.database import engine, Base
+from app.api.v1.routes import user, targets, profile
 import uvicorn
 
 # Veritabanı tablolarını oluştur
@@ -26,19 +26,20 @@ app.add_middleware(
 )
 
 # Router'ları dahil et
-app.include_router(user.router, prefix="/api", tags=["Kullanıcı Yönetimi"])
-app.include_router(targets.router, prefix="/api", tags=["Hedef Yönetimi"])
-app.include_router(profile.router, prefix="/api", tags=["Profil Yönetimi"])
+app.include_router(user.router, prefix="/api/v1", tags=["Kullanıcı Yönetimi"])
+app.include_router(targets.router, prefix="/api/v1", tags=["Hedef Yönetimi"])
+app.include_router(profile.router, prefix="/api/v1", tags=["Profil Yönetimi"])
 
 # Static files için mount (CSS, JS, images vb.)
-app.mount("/static", StaticFiles(directory="."), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/templates", StaticFiles(directory="templates"), name="templates")
 
 @app.get("/")
 def read_root():
     """
     Ana sayfa - Login sayfasına yönlendir
     """
-    return RedirectResponse(url="/static/login.html")
+    return RedirectResponse(url="/templates/login.html")
 
 @app.get("/api")
 def api_info():

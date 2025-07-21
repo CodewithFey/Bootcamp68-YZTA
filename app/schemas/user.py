@@ -17,14 +17,6 @@ class UserLogin(BaseModel):
     username: str
     password: str
 
-# Token şeması
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-class TokenData(BaseModel):
-    username: Optional[str] = None
-
 # Kullanıcı yanıt şeması (şifre olmadan)
 class UserResponse(BaseModel):
     id: int
@@ -55,26 +47,6 @@ class ProfileComplete(BaseModel):
     profession: str = Field(..., min_length=2, max_length=100, description="Meslek")
     experience_level: str = Field(..., description="Deneyim seviyesi")
     career_goals: str = Field(..., min_length=10, description="Kariyer hedefleri")
-
-# Hedef yönetimi şemaları
-class TargetBase(BaseModel):
-    company: str = Field(..., min_length=2, max_length=100, description="Şirket adı")
-    role: str = Field(..., min_length=2, max_length=100, description="Hedef pozisyon")
-
-class TargetCreate(TargetBase):
-    pass
-
-class TargetOut(TargetBase):
-    id: int
-    user_id: int
-    created_at: datetime
-    
-    class Config:
-        from_attributes = True
-
-# Başarı mesajı şeması
-class Message(BaseModel):
-    message: str 
 
 # Profil yönetimi şemaları
 class UserProfileOut(BaseModel):

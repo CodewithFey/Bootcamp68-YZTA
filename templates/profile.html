@@ -4,420 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil - Kariyer Koçu</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css?v=2024012001">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .profile-container {
-            max-width: 900px;
-            margin: 50px auto;
-            padding: 20px;
-        }
-        
-        .profile-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .profile-header h1 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .profile-header p {
-            color: var(--secondary-color);
-            font-size: 1.2rem;
-        }
-        
-        .profile-actions {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .profile-view {
-            background: var(--white);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 0;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-        
-        .profile-header-card {
-            background: linear-gradient(135deg, var(--primary-color), #667eea);
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .profile-avatar i {
-            font-size: 3rem;
-            color: white;
-        }
-        
-        .profile-name {
-            font-size: 2rem;
-            font-weight: 600;
-            margin: 0 0 10px 0;
-        }
-        
-        .profile-title {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin: 0;
-        }
-        
-        .profile-content {
-            padding: 30px;
-        }
-        
-        .profile-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-        
-        .profile-card {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 25px;
-            border: 1px solid #e9ecef;
-            transition: all 0.3s ease;
-        }
-        
-        .profile-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-        }
-        
-        .profile-card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .profile-card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            background: var(--primary-color);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-            font-size: 1.2rem;
-        }
-        
-        .profile-card-title {
-            font-weight: 600;
-            color: var(--primary-color);
-            margin: 0;
-            font-size: 1.1rem;
-        }
-        
-        .profile-card-content {
-            color: var(--secondary-color);
-            font-size: 1rem;
-            line-height: 1.6;
-            margin: 0;
-        }
-        
-        .profile-card-empty {
-            color: var(--muted-text);
-            font-style: italic;
-            opacity: 0.7;
-        }
-        
-        .profile-stats {
-            display: flex;
-            justify-content: space-around;
-            padding: 25px 0;
-            border-top: 1px solid #e9ecef;
-            margin-top: 30px;
-        }
-        
-        .profile-stat {
-            text-align: center;
-        }
-        
-        .profile-stat-value {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin: 0;
-        }
-        
-        .profile-stat-label {
-            color: var(--secondary-color);
-            font-size: 0.9rem;
-            margin: 5px 0 0 0;
-        }
-        
-        .profile-edit-form {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 30px;
-        }
-        
-        .profile-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-        
-        .option-card {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 30px;
-            text-align: center;
-            transition: var(--transition);
-        }
-        
-        .option-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--box-shadow-lg);
-        }
-        
-        .option-icon {
-            font-size: 4rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        
-        .option-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-        
-        .option-card p {
-            color: var(--secondary-color);
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-        
-        .form-section {
-            display: none;
-            background: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            padding: 30px;
-            margin-top: 30px;
-        }
-        
-        .form-section.active {
-            display: block;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: var(--primary-color);
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--input-border);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-        
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-        
-        .file-upload {
-            border: 2px dashed var(--input-border);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .file-upload:hover {
-            border-color: var(--primary-color);
-            background: var(--hover-background);
-        }
-        
-        .file-upload.dragover {
-            border-color: var(--primary-color);
-            background: var(--hover-background);
-        }
-        
-        .file-upload-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        
-        .file-upload-text {
-            color: var(--secondary-color);
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-        
-        .file-upload-info {
-            color: var(--muted-text);
-            font-size: 0.9rem;
-        }
-        
-        .form-actions {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        
-        .btn-back {
-            background: var(--secondary-color);
-            color: var(--white);
-            padding: 12px 30px;
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-        
-        .btn-back:hover {
-            background: var(--primary-color);
-        }
-        
-        .selected-file {
-            margin-top: 20px;
-            padding: 15px;
-            background: var(--hover-background);
-            border-radius: var(--border-radius);
-            border: 1px solid var(--primary-color);
-        }
-        
-        .selected-file-info {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .selected-file-name {
-            color: var(--primary-color);
-            font-weight: 500;
-        }
-        
-        .selected-file-size {
-            color: var(--secondary-color);
-            font-size: 0.9rem;
-        }
-        
-        .hidden {
-            display: none !important;
-        }
-        
-        @media (max-width: 768px) {
-            .profile-container {
-                margin: 20px auto;
-                padding: 15px;
-            }
-            
-            .profile-actions {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .profile-options {
-                grid-template-columns: 1fr;
-            }
-            
-            .profile-header-card {
-                padding: 30px 20px;
-            }
-            
-            .profile-avatar {
-                width: 80px;
-                height: 80px;
-                margin: 0 auto 15px;
-            }
-            
-            .profile-avatar i {
-                font-size: 2rem;
-            }
-            
-            .profile-name {
-                font-size: 1.5rem;
-            }
-            
-            .profile-title {
-                font-size: 1rem;
-            }
-            
-            .profile-content {
-                padding: 20px;
-            }
-            
-            .profile-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .profile-card {
-                padding: 20px;
-            }
-            
-            .profile-card[style*="grid-column"] {
-                grid-column: 1 / -1 !important;
-            }
-            
-            .profile-stats {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .profile-stat {
-                padding: 15px;
-                background: #f8f9fa;
-                border-radius: 10px;
-            }
-        }
-    </style>
 </head>
-<body>
+<body class="profile-page">
+    <!-- Navigation -->
+    <div class="nav-header">
+        <div class="nav-brand">
+            <i class="fas fa-chart-line"></i>
+            Kariyer Koçu
+        </div>
+        <div class="nav-menu">
+            <a href="/" class="nav-link">Ana Sayfa</a>
+            <a href="/templates/dashboard.html" class="nav-link">Dashboard</a>
+            <a href="/templates/profile.html" class="nav-link">Profil</a>
+            <div class="user-info">
+                <span id="userInfo">Kullanıcı</span>
+                <a href="#" class="nav-link" onclick="logout()">Çıkış</a>
+            </div>
+        </div>
+    </div>
     <div class="profile-container">
         <div class="profile-header">
             <h1 id="pageTitle">Profil</h1>
@@ -430,7 +37,7 @@
                 <button class="btn btn-primary" onclick="enableEditMode()">
                     <i class="fas fa-edit"></i> Profili Düzenle
                 </button>
-                <button class="btn-secondary" onclick="goToDashboard()">
+                <button class="btn btn-secondary" onclick="goToDashboard()">
                     <i class="fas fa-arrow-left"></i> Dashboard'a Dön
                 </button>
             </div>
@@ -532,7 +139,7 @@
         <!-- Profil Düzenleme Modu -->
         <div id="profileEditMode" class="hidden">
             <div class="profile-actions">
-                <button class="btn-back" onclick="disableEditMode()">
+                <button class="btn btn-secondary" onclick="disableEditMode()">
                     <i class="fas fa-times"></i> Düzenlemeyi İptal
                 </button>
             </div>
@@ -716,7 +323,7 @@
         </div>
     </div>
     
-    <script src="script.js"></script>
+    <script src="/static/js/script.js"></script>
     <script>
         // Global variables
         let currentMode = 'view';
@@ -728,7 +335,7 @@
             const token = localStorage.getItem('access_token');
             
             if (!token) {
-                window.location.href = '/static/login.html';
+                window.location.href = '/templates/login.html';
                 return;
             }
             
@@ -748,7 +355,7 @@
             const token = localStorage.getItem('access_token');
             
             try {
-                const response = await fetch('/api/me/profile', {
+                const response = await fetch('/api/v1/profile/me', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -872,7 +479,7 @@
         
         // Dashboard'a git
         function goToDashboard() {
-            window.location.href = '/static/dashboard.html';
+            window.location.href = '/templates/dashboard.html';
         }
         
         // Profil tamamlama fonksiyonları
@@ -908,7 +515,7 @@
             
             try {
                 const token = localStorage.getItem('access_token');
-                const response = await fetch('/api/me/profile', {
+                const response = await fetch('/api/v1/profile/me', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1011,9 +618,15 @@
             const formData = new FormData();
             formData.append('cv_file', fileInput.files[0]);
             
+            // Yükleme sırasında loading durumu göster
+            const submitButton = e.target.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> CV İşleniyor...';
+            submitButton.disabled = true;
+            
             try {
                 const token = localStorage.getItem('access_token');
-                const response = await fetch('/api/profile/upload-cv', {
+                const response = await fetch('/api/v1/profile/upload-cv', {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -1025,14 +638,24 @@
                 
                 if (response.ok) {
                     toast.show(data.message, 'success');
-                    setTimeout(() => {
-                        window.location.href = '/static/dashboard.html';
-                    }, 2000);
+                    
+                    // Profil bilgilerini yeniden yükle ve görüntüleme moduna geç
+                    await loadProfile();
+                    if (currentProfile) {
+                        // 2 saniye sonra dashboard'a yönlendir
+                        setTimeout(() => {
+                            window.location.href = '/templates/dashboard.html';
+                        }, 3000);
+                    }
                 } else {
                     toast.show(data.detail || 'CV yükleme başarısız', 'error');
                 }
             } catch (error) {
                 toast.show('Bağlantı hatası oluştu', 'error');
+            } finally {
+                // Button'u eski haline getir
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
             }
         });
         
@@ -1045,7 +668,7 @@
             
             try {
                 const token = localStorage.getItem('access_token');
-                const response = await fetch('/api/profile/complete', {
+                const response = await fetch('/api/v1/profile/complete', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1059,7 +682,7 @@
                 if (response.ok) {
                     toast.show(data.message, 'success');
                     setTimeout(() => {
-                        window.location.href = '/static/dashboard.html';
+                        window.location.href = '/templates/dashboard.html';
                     }, 2000);
                 } else {
                     toast.show(data.detail || 'Profil güncelleme başarısız', 'error');
@@ -1069,6 +692,12 @@
                 toast.show('Bağlantı hatası oluştu', 'error');
             }
         });
+
+        // Logout fonksiyonu
+        function logout() {
+            localStorage.removeItem('access_token');
+            window.location.href = '/templates/login.html';
+        }
     </script>
 </body>
 </html> 
