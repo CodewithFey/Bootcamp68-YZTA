@@ -1,6 +1,8 @@
 import re
 import os
 from pdfminer.high_level import extract_text
+from .missing_skills import find_missing_skills
+
 
 # Spacy'yi isteğe bağlı olarak import et
 try:
@@ -274,7 +276,7 @@ def clean_skill_text(skill_text):
 
 #Test
 if __name__ == "__main__":
-    pdf_path = r"C:\Users\Yusuf Açık\Desktop\STAJ\S.pdf"
+    pdf_path = r"C:\Users\Yusuf Açık\Desktop\STAJ\özgeçmiş.pdf"
     if os.path.exists(pdf_path):
         data = main(pdf_path)
         
@@ -285,8 +287,16 @@ if __name__ == "__main__":
         
         try:
             from app.services.missing_skills import find_missing_skills
+            from app.services.micro_planning import build_target_prompt, generate_micro_goals
+
+            prompt = build_target_prompt(data,target)
+
+            micro_goal = generate_micro_goals(prompt)
+
             missing = find_missing_skills(clean_skils, target)
+            
             print("Eksik beceriler:", missing)
+            print("Mikro hedefler : ",micro_goal)
         except ImportError:
             print("Missing skills modülü bulunamadı")
     else:
