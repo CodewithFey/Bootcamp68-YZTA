@@ -5,7 +5,7 @@ from fastapi.responses import RedirectResponse
 from app.core.database import engine, Base
 from app.api.v1.routes import user, targets, profile
 import uvicorn
-
+from app.api.v1.routes import ai_coach  # AI Kariyer
 # Veritabanı tablolarını oluştur
 Base.metadata.create_all(bind=engine)
 
@@ -29,6 +29,7 @@ app.add_middleware(
 app.include_router(user.router, prefix="/api/v1", tags=["Kullanıcı Yönetimi"])
 app.include_router(targets.router, prefix="/api/v1", tags=["Hedef Yönetimi"])
 app.include_router(profile.router, prefix="/api/v1", tags=["Profil Yönetimi"])
+app.include_router(ai_coach.router, prefix="/api/v1", tags=["AI Kariyer Koçu"])
 
 # Static files için mount (CSS, JS, images vb.)
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -59,6 +60,7 @@ def health_check():
     Sağlık kontrolü endpoint'i
     """
     return {"status": "healthy", "message": "Kariyer Koçu API çalışıyor"}
+
 
 
 
