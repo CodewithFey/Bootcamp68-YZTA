@@ -112,3 +112,57 @@ PathMentor, kullanıcıların CV'lerini yükleyerek kariyer hedeflerine göre ö
 - Kısıtlı zamana rağmen sprint hedeflerine ulaşmak için takım içi sorumluluk paylaşımı dengelendi.
 - Bir sonraki sprintte son özelliklerin tamamlanması ve ürünün son hâlinin hazırlanması planlanmaktadır.
 
+
+# Sprint 3
+Bu sprintte, projenin gelişmiş modülleri tamamlanmış, kullanıcıya daha derinlemesine analiz ve rehberlik sunan özellikler eklenmiş, ayrıca proje teslimine yönelik final hazırlıkları gerçekleştirilmiştir.
+
+Geliştirilen Modüller
+Mülakat Simülasyonu AI Prompt Modülü
+Kullanıcıya kişiselleştirilmiş mülakat soruları sunan yapay zeka destekli bir modül geliştirildi. LLM temelli senaryo üretimi ile gerçekçi ve pozisyonlara uygun mülakat deneyimi sağlandı.
+
+Kullanıcı Cevap Analizi ve LLM ile Geri Bildirim
+Kullanıcının verdiği mülakat cevapları doğal dil işleme ile analiz edildi. LLM ile otomatik geri bildirimler üretildi ve gelişim önerileri sunuldu.
+
+Kullanıcının Gelişim Grafiği ve Haftalık Bildirimler
+Kullanıcının performansı haftalık grafiklerle görselleştirildi. Kullanıcıya haftalık gelişim raporları bildirim veya e-posta yoluyla iletildi.
+
+Görev Takip Paneli
+Kullanıcının görevlerini takip edebileceği ve tamamlanma durumlarını görebileceği bir panel oluşturuldu. Görev filtreleme ve sıralama desteği sağlandı.
+
+Kariyer Öneri Sistemi ve Alternatif Pozisyon Modülü
+Kullanıcının tercihleri ve analizlerine göre kariyer yolları önerildi. Ayrıca benzer pozisyonlara dair alternatifler sunuldu ve bu pozisyonlara dair bilgilendirme kartları hazırlandı.
+
+Final Hazırlıkları
+Yapılan İşlerin Birleştirilmesi
+Modüller arası bağlantılar entegre edildi. Uygulamanın uçtan uca sorunsuz çalışması sağlandı.
+
+Dashboard Temizliği ve UI Tutarlılık Kontrolleri
+Kullanıcı arayüzünde stil, ikon, font ve renk tutarlılığı sağlandı. Gereksiz UI karmaşıklıkları sadeleştirildi.
+
+Tanıtım Videosu ve Senaryo Hazırlığı
+Projenin genel işleyişini ve özelliklerini anlatan kısa bir tanıtım videosu hazırlandı. Senaryo ve çekim planı tamamlandı.
+
+Demo Sunumu için Slaytlar
+Demo sunumunda kullanılmak üzere görsel açıdan zengin, düzenli ve anlaşılır slaytlar oluşturuldu.
+
+Proje Kapanış Dokümantasyonu
+Kod yapısı, kullanım adımları, sistem gereksinimleri ve modül açıklamalarını içeren kapanış dökümanı hazırlandı.
+
+GitHub Temizliği ve ReadMe Düzenlemesi
+Gereksiz dosyalar kaldırıldı, dizin yapısı sadeleştirildi. README dosyası kurulum, kullanım ve katkı başlıkları ile yeniden düzenlendi.
+
+Toplantılar ve Süreç Takibi
+Sprint Review ve Retrospective
+Sprint sonunda geliştirilen tüm işler gözden geçirildi. Nelerin iyi gittiği ve nelerin geliştirilebileceği değerlendirildi.
+
+Görev Yönetimi Takibi
+Sprint boyunca görev yönetim aracı üzerinden iş takibi ve güncellemeler düzenli olarak yapıldı.
+
+Toplantı Notlarının Düzenlenmesi
+Tüm haftalık toplantı notları bir araya getirildi ve merkezi bir belgede düzenli olarak tutuldu.
+
+Danışman Toplantılarına Katılım
+Danışman ile düzenli olarak yapılan görüşmelere katılım sağlandı ve alınan geri bildirimler sprint çıktısına yansıtıldı.
+
+  
+
